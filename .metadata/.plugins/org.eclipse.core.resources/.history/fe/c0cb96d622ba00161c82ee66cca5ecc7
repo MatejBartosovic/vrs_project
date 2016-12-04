@@ -42,7 +42,7 @@ public:
     /// \param[in] slaveSelectPin The controler pin to use to select the desired SPI device. This pin will be driven LOW
     /// during SPI communications with the SPI device that uis iused by this Driver.
     /// \param[in] spi Reference to the SPI interface to use. The default is to use a default built-in Hardware interface.
-    RHSPIDriver(GenericSPI& spi = RaspberryPiSPI);
+    RHSPIDriver(uint8_t slaveSelectPin = SS, GenericSPI& spi = RaspberryPiSPI);
 
     /// Initialise the Driver transport hardware and software.
     /// Make sure the Driver is properly configured before calling init().
@@ -82,6 +82,7 @@ protected:
     GenericSPI&       _spi;
 
     /// The pin number of the Slave Selct pin that is used to select the desired device.
+    uint8_t             _slaveSelectPin;
 };
 
 #endif

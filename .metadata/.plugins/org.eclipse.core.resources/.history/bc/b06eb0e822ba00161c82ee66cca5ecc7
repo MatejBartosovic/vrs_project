@@ -82,6 +82,7 @@ protected:
     GenericSPI&       _spi;
 
     /// The pin number of the Slave Selct pin that is used to select the desired device.
+    uint8_t             _slaveSelectPin;
 };
 
 #endif

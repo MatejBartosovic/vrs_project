@@ -62,9 +62,12 @@ uint8_t RHSPIDriver::spiBurstWrite(uint8_t reg, const uint8_t* src, uint8_t len)
     char received[len+1];
     char send[len+1];
     send[0] = reg | RH_SPI_WRITE_MASK;
-    _spi.transfernb(send,received,len);
+    _spi.transfernb()
+    status = _spi.transfer(reg | RH_SPI_WRITE_MASK); // Send the start address with the write mask on
+    while (len--)
+	_spi.transfer(*src++);
 
-    return received[0];
+    return status;
 }
 
 

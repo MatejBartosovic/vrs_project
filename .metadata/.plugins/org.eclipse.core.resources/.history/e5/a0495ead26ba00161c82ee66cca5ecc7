@@ -4,9 +4,6 @@
 // $Id: RH_RF22.cpp,v 1.23 2015/01/02 21:38:24 mikem Exp $
 
 #include <RH_RF22.h>
-#include <wiringPi.h>
-#include <math.h>
-#include <string.h>
 
 // Interrupt vectors for the 2 Arduino interrupt pins
 // Each interrupt can be handled by a different instance of RH_RF22, allowing you to have
@@ -18,7 +15,7 @@ uint8_t RH_RF22::_interruptCount = 0; // Index into _deviceForInterrupt for next
 // Canned modem configurations generated with
 // http://www.hoperf.com/upload/rf/RH_RF22B%2023B%2031B%2042B%2043B%20Register%20Settings_RevB1-v5.xls
 // Stored in flash (program) memory to save SRAM
-static const RH_RF22::ModemConfig MODEM_CONFIG_TABLE[] =
+PROGMEM static const RH_RF22::ModemConfig MODEM_CONFIG_TABLE[] =
 {
     { 0x2b, 0x03, 0xf4, 0x20, 0x41, 0x89, 0x00, 0x36, 0x40, 0x0a, 0x1d, 0x80, 0x60, 0x10, 0x62, 0x2c, 0x00, 0x08 }, // Unmodulated carrier
     { 0x2b, 0x03, 0xf4, 0x20, 0x41, 0x89, 0x00, 0x36, 0x40, 0x0a, 0x1d, 0x80, 0x60, 0x10, 0x62, 0x2c, 0x33, 0x08 }, // FSK, PN9 random modulation, 2, 5
@@ -61,7 +58,7 @@ static const RH_RF22::ModemConfig MODEM_CONFIG_TABLE[] =
 
 RH_RF22::RH_RF22(uint8_t slaveSelectPin, uint8_t interruptPin, GenericSPI& spi)
     :
-    RHSPIDriver(spi)
+    RHSPIDriver(slaveSelectPin, spi)
 {
     _interruptPin = interruptPin;
     _idleMode = RH_RF22_XTON; // Default idle state is READY mode
@@ -80,6 +77,8 @@ bool RH_RF22::init()
 	return false;
 
     // Determine the interrupt number that corresponds to the interruptPin
+    int interruptNumber = digitalPinToInterrupt(_interruptPin);
+    if (interruptNumber == NOT_AN_INTERRUPT)
 	return false;
 
     // Software reset the device
@@ -97,6 +96,7 @@ bool RH_RF22::init()
     // Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
     // ARM M4 requires the below. else pin interrupt doesn't work properly.
     // On all other platforms, its innocuous, belt and braces
+    pinMode(_interruptPin, INPUT);
 
     // Enable interrupt output on the radio. Interrupt line will now go high until
     // an interrupt occurs
@@ -109,7 +109,23 @@ bool RH_RF22::init()
     // On some devices, notably most Arduinos, the interrupt pin passed in is actually the
     // interrupt number. You have to figure out the interruptnumber-to-interruptpin mapping
     // yourself based on knowledge of what Arduino board you are running on.
-    wiringPiISR (, INT_EDGE_FALLING,  this->handleInterrupt);
+    if (_myInterruptIndex == 0xff)
+    {
+	// First run, no interrupt allocated yet
+	if (_interruptCount <= RH_RF22_NUM_INTERRUPTS)
+	    _myInterruptIndex = _interruptCount++;
+	else
+	    return false; // Too many devices, not enough interrupt vectors
+    }
+    _deviceForInterrupt[_myInterruptIndex] = this;
+    if (_myInterruptIndex == 0)
+	attachInterrupt(interruptNumber, isr0, FALLING);
+    else if (_myInterruptIndex == 1)
+	attachInterrupt(interruptNumber, isr1, FALLING);
+    else if (_myInterruptIndex == 2)
+	attachInterrupt(interruptNumber, isr2, FALLING);
+    else
+	return false; // Too many devices, not enough interrupt vectors
 
     setModeIdle();
 
@@ -270,7 +286,7 @@ void RH_RF22::handleInterrupt()
     {
 //	Serial.println("IPREAVAL");
 	_lastRssi = (int8_t)(-120 + ((spiRead(RH_RF22_REG_26_RSSI) / 2)));
-	_lastPreambleTime = 0;
+	_lastPreambleTime = millis();
 	resetRxFifo();
 	clearRxBuf();
     }
@@ -299,7 +315,7 @@ void RH_RF22::reset()
 {
     spiWrite(RH_RF22_REG_07_OPERATING_MODE1, RH_RF22_SWRES);
     // Wait for it to settle
-    usleep(1000); // SWReset time is nominally 100usec
+    delay(1); // SWReset time is nominally 100usec
 }
 
 uint8_t RH_RF22::statusRead()
@@ -428,7 +444,7 @@ void RH_RF22::setModeIdle()
     }
 }
 
-/*bool RH_RF22::sleep()
+bool RH_RF22::sleep()
 {
     if (_mode != RHModeSleep)
     {
@@ -436,7 +452,7 @@ void RH_RF22::setModeIdle()
 	_mode = RHModeSleep;
     }
     return true;
-}*/
+}
 
 void RH_RF22::setModeRx()
 {
@@ -485,7 +501,7 @@ bool RH_RF22::setModemConfig(ModemConfigChoice index)
         return false;
 
     RH_RF22::ModemConfig cfg;
-    memcpy(&cfg, &MODEM_CONFIG_TABLE[index], sizeof(RH_RF22::ModemConfig));
+    memcpy_P(&cfg, &MODEM_CONFIG_TABLE[index], sizeof(RH_RF22::ModemConfig));
     setModemRegisters(&cfg);
 
     return true;
@@ -505,8 +521,10 @@ void RH_RF22::setSyncWords(const uint8_t* syncWords, uint8_t len)
 
 void RH_RF22::clearRxBuf()
 {
+    ATOMIC_BLOCK_START;
     _bufLen = 0;
     _rxBufValid = false;
+    ATOMIC_BLOCK_END;
 }
 
 bool RH_RF22::available()
@@ -527,9 +545,11 @@ bool RH_RF22::recv(uint8_t* buf, uint8_t* len)
 
     if (buf && len)
     {
+	ATOMIC_BLOCK_START;
 	if (*len > _bufLen)
 	    *len = _bufLen;
 	memcpy(buf, _buf, *len);
+	ATOMIC_BLOCK_END;
     }
     clearRxBuf();
 //    printBuffer("recv:", buf, *len);
@@ -538,8 +558,10 @@ bool RH_RF22::recv(uint8_t* buf, uint8_t* len)
 
 void RH_RF22::clearTxBuf()
 {
+    ATOMIC_BLOCK_START;
     _bufLen = 0;
     _txBufSentIndex = 0;
+    ATOMIC_BLOCK_END;
 }
 
 void RH_RF22::startTransmit()
@@ -562,6 +584,7 @@ bool RH_RF22::send(const uint8_t* data, uint8_t len)
 {
     bool ret = true;
     waitPacketSent();
+    ATOMIC_BLOCK_START;
     spiWrite(RH_RF22_REG_3A_TRANSMIT_HEADER3, _txHeaderTo);
     spiWrite(RH_RF22_REG_3B_TRANSMIT_HEADER2, _txHeaderFrom);
     spiWrite(RH_RF22_REG_3C_TRANSMIT_HEADER1, _txHeaderId);
@@ -570,6 +593,7 @@ bool RH_RF22::send(const uint8_t* data, uint8_t len)
 	ret = false;
     else
 	startTransmit();
+    ATOMIC_BLOCK_END;
 //    printBuffer("send:", data, len);
     return ret;
 }
@@ -586,8 +610,10 @@ bool RH_RF22::appendTxBuf(const uint8_t* data, uint8_t len)
 {
     if (((uint16_t)_bufLen + len) > RH_RF22_MAX_MESSAGE_LEN)
 	return false;
+    ATOMIC_BLOCK_START;
     memcpy(_buf + _bufLen, data, len);
     _bufLen += len;
+    ATOMIC_BLOCK_END;
 //    printBuffer("txbuf:", _buf, _bufLen);
     return true;
 }

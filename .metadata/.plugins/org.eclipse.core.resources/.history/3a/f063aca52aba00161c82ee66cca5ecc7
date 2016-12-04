@@ -5,8 +5,6 @@
 
 #include <RH_RF22.h>
 #include <wiringPi.h>
-#include <math.h>
-#include <string.h>
 
 // Interrupt vectors for the 2 Arduino interrupt pins
 // Each interrupt can be handled by a different instance of RH_RF22, allowing you to have
@@ -270,7 +268,7 @@ void RH_RF22::handleInterrupt()
     {
 //	Serial.println("IPREAVAL");
 	_lastRssi = (int8_t)(-120 + ((spiRead(RH_RF22_REG_26_RSSI) / 2)));
-	_lastPreambleTime = 0;
+	_lastPreambleTime = millis();
 	resetRxFifo();
 	clearRxBuf();
     }
@@ -299,7 +297,7 @@ void RH_RF22::reset()
 {
     spiWrite(RH_RF22_REG_07_OPERATING_MODE1, RH_RF22_SWRES);
     // Wait for it to settle
-    usleep(1000); // SWReset time is nominally 100usec
+    delay(1); // SWReset time is nominally 100usec
 }
 
 uint8_t RH_RF22::statusRead()
@@ -428,7 +426,7 @@ void RH_RF22::setModeIdle()
     }
 }
 
-/*bool RH_RF22::sleep()
+bool RH_RF22::sleep()
 {
     if (_mode != RHModeSleep)
     {
@@ -436,7 +434,7 @@ void RH_RF22::setModeIdle()
 	_mode = RHModeSleep;
     }
     return true;
-}*/
+}
 
 void RH_RF22::setModeRx()
 {
@@ -485,7 +483,7 @@ bool RH_RF22::setModemConfig(ModemConfigChoice index)
         return false;
 
     RH_RF22::ModemConfig cfg;
-    memcpy(&cfg, &MODEM_CONFIG_TABLE[index], sizeof(RH_RF22::ModemConfig));
+    memcpy_P(&cfg, &MODEM_CONFIG_TABLE[index], sizeof(RH_RF22::ModemConfig));
     setModemRegisters(&cfg);
 
     return true;
@@ -505,8 +503,10 @@ void RH_RF22::setSyncWords(const uint8_t* syncWords, uint8_t len)
 
 void RH_RF22::clearRxBuf()
 {
+    ATOMIC_BLOCK_START;
     _bufLen = 0;
     _rxBufValid = false;
+    ATOMIC_BLOCK_END;
 }
 
 bool RH_RF22::available()
@@ -527,9 +527,11 @@ bool RH_RF22::recv(uint8_t* buf, uint8_t* len)
 
     if (buf && len)
     {
+	ATOMIC_BLOCK_START;
 	if (*len > _bufLen)
 	    *len = _bufLen;
 	memcpy(buf, _buf, *len);
+	ATOMIC_BLOCK_END;
     }
     clearRxBuf();
 //    printBuffer("recv:", buf, *len);
@@ -538,8 +540,10 @@ bool RH_RF22::recv(uint8_t* buf, uint8_t* len)
 
 void RH_RF22::clearTxBuf()
 {
+    ATOMIC_BLOCK_START;
     _bufLen = 0;
     _txBufSentIndex = 0;
+    ATOMIC_BLOCK_END;
 }
 
 void RH_RF22::startTransmit()
@@ -562,6 +566,7 @@ bool RH_RF22::send(const uint8_t* data, uint8_t len)
 {
     bool ret = true;
     waitPacketSent();
+    ATOMIC_BLOCK_START;
     spiWrite(RH_RF22_REG_3A_TRANSMIT_HEADER3, _txHeaderTo);
     spiWrite(RH_RF22_REG_3B_TRANSMIT_HEADER2, _txHeaderFrom);
     spiWrite(RH_RF22_REG_3C_TRANSMIT_HEADER1, _txHeaderId);
@@ -570,6 +575,7 @@ bool RH_RF22::send(const uint8_t* data, uint8_t len)
 	ret = false;
     else
 	startTransmit();
+    ATOMIC_BLOCK_END;
 //    printBuffer("send:", data, len);
     return ret;
 }
@@ -586,8 +592,10 @@ bool RH_RF22::appendTxBuf(const uint8_t* data, uint8_t len)
 {
     if (((uint16_t)_bufLen + len) > RH_RF22_MAX_MESSAGE_LEN)
 	return false;
+    ATOMIC_BLOCK_START;
     memcpy(_buf + _bufLen, data, len);
     _bufLen += len;
+    ATOMIC_BLOCK_END;
 //    printBuffer("txbuf:", _buf, _bufLen);
     return true;
 }
