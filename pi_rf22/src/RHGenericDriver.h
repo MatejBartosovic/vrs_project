@@ -6,13 +6,16 @@
 #ifndef RHGenericDriver_h
 #define RHGenericDriver_h
 
-#include <RadioHead.h>
+//#include <RadioHead.h>
+#include <inttypes.h>
+#include <stdio.h>
 
 // Defines bits of the FLAGS header reserved for use by the RadioHead library and
 // the flags available for use by applications
 #define RH_FLAGS_RESERVED                 0xf0
 #define RH_FLAGS_APPLICATION_SPECIFIC     0x0f
 #define RH_FLAGS_NONE                     0
+#define RH_BROADCAST_ADDRESS			  0xff
 
 /////////////////////////////////////////////////////////////////////
 /// \class RHGenericDriver RHGenericDriver.h <RHGenericDriver.h>

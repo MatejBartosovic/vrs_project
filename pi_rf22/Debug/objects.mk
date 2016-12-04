@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lbcm2835
+LIBS := -lbcm2835 -lwiringPi
 

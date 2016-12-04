@@ -1,12 +1,11 @@
 // RH_RF22.cpp
 //
 // Copyright (C) 2011 Mike McCauley
-// $Id: RH_RF22.cpp,v 1.23 2015/01/02 21:38:24 mikem Exp $
+// $Id: RH_RF22.cpp,v 1.17 2014/05/30 19:30:54 mikem Exp $
 
-#include <RH_RF22.h>
-#include <wiringPi.h>
+#include "RH_RF22.h"
 #include <math.h>
-#include <string.h>
+#include <wiringPi.h>
 
 // Interrupt vectors for the 2 Arduino interrupt pins
 // Each interrupt can be handled by a different instance of RH_RF22, allowing you to have
@@ -15,7 +14,7 @@ RH_RF22* RH_RF22::_deviceForInterrupt[RH_RF22_NUM_INTERRUPTS] = {0, 0, 0};
 uint8_t RH_RF22::_interruptCount = 0; // Index into _deviceForInterrupt for next device
 
 // These are indexed by the values of ModemConfigChoice
-// Canned modem configurations generated with
+// Canned modem configurations generated with 
 // http://www.hoperf.com/upload/rf/RH_RF22B%2023B%2031B%2042B%2043B%20Register%20Settings_RevB1-v5.xls
 // Stored in flash (program) memory to save SRAM
 static const RH_RF22::ModemConfig MODEM_CONFIG_TABLE[] =
@@ -59,27 +58,18 @@ static const RH_RF22::ModemConfig MODEM_CONFIG_TABLE[] =
     { 0x98, 0x03, 0x96, 0x00, 0xda, 0x74, 0x00, 0xdc, 0x28, 0x1f, 0x29, 0x80, 0x60, 0x0a, 0x3d, 0x0c, 0x21, 0x08 }, // 40, 335
 };
 
-RH_RF22::RH_RF22(uint8_t slaveSelectPin, uint8_t interruptPin, GenericSPI& spi)
+RH_RF22::RH_RF22( uint8_t interruptPin, GenericSPI& spi)
     :
     RHSPIDriver(spi)
 {
     _interruptPin = interruptPin;
     _idleMode = RH_RF22_XTON; // Default idle state is READY mode
     _polynomial = CRC_16_IBM; // Historical
-    _myInterruptIndex = 0xff; // Not allocated yet
-}
-
-void RH_RF22::setIdleMode(uint8_t idleMode)
-{
-    _idleMode = idleMode;
 }
 
 bool RH_RF22::init()
 {
     if (!RHSPIDriver::init())
-	return false;
-
-    // Determine the interrupt number that corresponds to the interruptPin
 	return false;
 
     // Software reset the device
@@ -94,28 +84,23 @@ bool RH_RF22::init()
 	return false;
     }
 
-    // Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
-    // ARM M4 requires the below. else pin interrupt doesn't work properly.
-    // On all other platforms, its innocuous, belt and braces
 
+    //TODO setup interrupts here
+    if(wiringPiSetupGpio()==-1);
+    	printf("wiring pi init failed");
+    //wiringPiISR(_interruptPin,INT_EDGE_FALLING,&handleInterrupt);
     // Enable interrupt output on the radio. Interrupt line will now go high until
     // an interrupt occurs
     spiWrite(RH_RF22_REG_05_INTERRUPT_ENABLE1, RH_RF22_ENTXFFAEM | RH_RF22_ENRXFFAFULL | RH_RF22_ENPKSENT | RH_RF22_ENPKVALID | RH_RF22_ENCRCERROR | RH_RF22_ENFFERR);
     spiWrite(RH_RF22_REG_06_INTERRUPT_ENABLE2, RH_RF22_ENPREAVAL);
 
-    // Set up interrupt handler
-    // Since there are a limited number of interrupt glue functions isr*() available,
-    // we can only support a limited number of devices simultaneously
-    // On some devices, notably most Arduinos, the interrupt pin passed in is actually the
-    // interrupt number. You have to figure out the interruptnumber-to-interruptpin mapping
-    // yourself based on knowledge of what Arduino board you are running on.
-    wiringPiISR (, INT_EDGE_FALLING,  this->handleInterrupt);
+    _interruptCount++;
 
     setModeIdle();
 
     clearTxBuf();
     clearRxBuf();
-
+  
     // Most of these are the POR default
     spiWrite(RH_RF22_REG_7D_TX_FIFO_CONTROL2, RH_RF22_TXFFAEM_THRESHOLD);
     spiWrite(RH_RF22_REG_7E_RX_FIFO_CONTROL,  RH_RF22_RXFFAFULL_THRESHOLD);
@@ -141,7 +126,7 @@ bool RH_RF22::init()
     setPreambleLength(8);
     uint8_t syncwords[] = { 0x2d, 0xd4 };
     setSyncWords(syncwords, sizeof(syncwords));
-    setPromiscuous(false);
+    setPromiscuous(false); 
 
     // Set some defaults. An innocuous ISM frequency, and reasonable pull-in
     setFrequency(434.0, 0.05);
@@ -159,12 +144,12 @@ bool RH_RF22::init()
 // C++ level interrupt handler for this instance
 void RH_RF22::handleInterrupt()
 {
+	printf("interrupt");
     uint8_t _lastInterruptFlags[2];
     // Read the interrupt flags which clears the interrupt
     spiBurstRead(RH_RF22_REG_03_INTERRUPT_STATUS1, _lastInterruptFlags, 2);
 
 #if 0
-    // DEVELOPER TESTING ONLY
     // Caution: Serial printing in this interrupt routine can cause mysterious crashes
     Serial.print("interrupt ");
     Serial.print(_lastInterruptFlags[0], HEX);
@@ -175,7 +160,6 @@ void RH_RF22::handleInterrupt()
 #endif
 
 #if 0
-    // DEVELOPER TESTING ONLY
     // TESTING: fake an RH_RF22_IFFERROR
     static int counter = 0;
     if (_lastInterruptFlags[0] & RH_RF22_IPKSENT && counter++ == 10)
@@ -192,38 +176,38 @@ void RH_RF22::handleInterrupt()
 	    restartTransmit();
 	else if (_mode == RHModeRx)
 	    clearRxBuf();
-//	Serial.println("IFFERROR");
+//	Serial.println("IFFERROR");  
     }
     // Caution, any delay here may cause a FF underflow or overflow
     if (_lastInterruptFlags[0] & RH_RF22_ITXFFAEM)
     {
-	// See if more data has to be loaded into the Tx FIFO
-  	sendNextFragment();
-//	Serial.println("ITXFFAEM");
+	// See if more data has to be loaded into the Tx FIFO 
+	sendNextFragment();
+//	Serial.println("ITXFFAEM");  
     }
     if (_lastInterruptFlags[0] & RH_RF22_IRXFFAFULL)
     {
 	// Caution, any delay here may cause a FF overflow
 	// Read some data from the Rx FIFO
 	readNextFragment();
-//	Serial.println("IRXFFAFULL");
+//	Serial.println("IRXFFAFULL"); 
     }
     if (_lastInterruptFlags[0] & RH_RF22_IEXT)
     {
 	// This is not enabled by the base code, but users may want to enable it
 	handleExternalInterrupt();
-//	Serial.println("IEXT");
+//	Serial.println("IEXT"); 
     }
     if (_lastInterruptFlags[1] & RH_RF22_IWUT)
     {
 	// This is not enabled by the base code, but users may want to enable it
 	handleWakeupTimerInterrupt();
-//	Serial.println("IWUT");
+//	Serial.println("IWUT"); 
     }
     if (_lastInterruptFlags[0] & RH_RF22_IPKSENT)
     {
-//	Serial.println("IPKSENT");
-	_txGood++;
+//	Serial.println("IPKSENT");   
+	_txGood++; 
 	// Transmission does not automatically clear the tx buffer.
 	// Could retransmit if we wanted
 	// RH_RF22 transitions automatically to Idle
@@ -232,7 +216,7 @@ void RH_RF22::handleInterrupt()
     if (_lastInterruptFlags[0] & RH_RF22_IPKVALID)
     {
 	uint8_t len = spiRead(RH_RF22_REG_4B_RECEIVED_PACKET_LENGTH);
-//	Serial.println("IPKVALID");
+//	Serial.println("IPKVALID");   
 
 	// May have already read one or more fragments
 	// Get any remaining unread octets, based on the expected length
@@ -244,7 +228,7 @@ void RH_RF22::handleInterrupt()
 	    _rxBad++;
 	    _mode = RHModeIdle;
 	    clearRxBuf();
-	    return; // Hmmm receiver buffer overflow.
+	    return; // Hmmm receiver buffer overflow. 
 	}
 
 	spiBurstRead(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _bufLen, len - _bufLen);
@@ -259,7 +243,7 @@ void RH_RF22::handleInterrupt()
     }
     if (_lastInterruptFlags[0] & RH_RF22_ICRCERROR)
     {
-//	Serial.println("ICRCERR");
+//	Serial.println("ICRCERR");  
 	_rxBad++;
 	clearRxBuf();
 	resetRxFifo();
@@ -268,9 +252,9 @@ void RH_RF22::handleInterrupt()
     }
     if (_lastInterruptFlags[1] & RH_RF22_IPREAVAL)
     {
-//	Serial.println("IPREAVAL");
+//	Serial.println("IPREAVAL");  
 	_lastRssi = (int8_t)(-120 + ((spiRead(RH_RF22_REG_26_RSSI) / 2)));
-	_lastPreambleTime = 0;
+	//_lastPreambleTime = millis();
 	resetRxFifo();
 	clearRxBuf();
     }
@@ -299,7 +283,7 @@ void RH_RF22::reset()
 {
     spiWrite(RH_RF22_REG_07_OPERATING_MODE1, RH_RF22_SWRES);
     // Wait for it to settle
-    usleep(1000); // SWReset time is nominally 100usec
+    delay(1); // SWReset time is nominally 100usec
 }
 
 uint8_t RH_RF22::statusRead()
@@ -309,7 +293,7 @@ uint8_t RH_RF22::statusRead()
 
 uint8_t RH_RF22::adcRead(uint8_t adcsel,
                       uint8_t adcref ,
-                      uint8_t adcgain,
+                      uint8_t adcgain, 
                       uint8_t adcoffs)
 {
     uint8_t configuration = adcsel | adcref | (adcgain & RH_RF22_ADCGAIN);
@@ -320,7 +304,7 @@ uint8_t RH_RF22::adcRead(uint8_t adcsel,
     // Wait for the DONE bit
     while (!(spiRead(RH_RF22_REG_0F_ADC_CONFIGURATION) & RH_RF22_ADCDONE))
 	;
-    // Return the value
+    // Return the value  
     return spiRead(RH_RF22_REG_11_ADC_VALUE);
 }
 
@@ -328,7 +312,7 @@ uint8_t RH_RF22::temperatureRead(uint8_t tsrange, uint8_t tvoffs)
 {
     spiWrite(RH_RF22_REG_12_TEMPERATURE_SENSOR_CALIBRATION, tsrange | RH_RF22_ENTSOFFS);
     spiWrite(RH_RF22_REG_13_TEMPERATURE_VALUE_OFFSET, tvoffs);
-    return adcRead(RH_RF22_ADCSEL_INTERNAL_TEMPERATURE_SENSOR | RH_RF22_ADCREF_BANDGAP_VOLTAGE);
+    return adcRead(RH_RF22_ADCSEL_INTERNAL_TEMPERATURE_SENSOR | RH_RF22_ADCREF_BANDGAP_VOLTAGE); 
 }
 
 uint16_t RH_RF22::wutRead()
@@ -428,16 +412,6 @@ void RH_RF22::setModeIdle()
     }
 }
 
-/*bool RH_RF22::sleep()
-{
-    if (_mode != RHModeSleep)
-    {
-	setOpMode(0);
-	_mode = RHModeSleep;
-    }
-    return true;
-}*/
-
 void RH_RF22::setModeRx()
 {
     if (_mode != RHModeRx)
@@ -512,11 +486,7 @@ void RH_RF22::clearRxBuf()
 bool RH_RF22::available()
 {
     if (!_rxBufValid)
-    {
-	if (_mode == RHModeTx)
-	    return false;
 	setModeRx(); // Make sure we are receiving
-    }
     return _rxBufValid;
 }
 
@@ -526,7 +496,7 @@ bool RH_RF22::recv(uint8_t* buf, uint8_t* len)
 	return false;
 
     if (buf && len)
-    {
+    {;
 	if (*len > _bufLen)
 	    *len = _bufLen;
 	memcpy(buf, _buf, *len);
@@ -578,7 +548,7 @@ bool RH_RF22::fillTxBuf(const uint8_t* data, uint8_t len)
 {
     clearTxBuf();
     if (!len)
-	return false;
+	return false; 
     return appendTxBuf(data, len);
 }
 

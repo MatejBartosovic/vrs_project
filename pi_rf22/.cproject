@@ -33,6 +33,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1039131251" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.libs.652138121" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="bcm2835"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="wiringPi"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.237735951" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

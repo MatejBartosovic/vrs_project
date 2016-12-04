@@ -1,87 +1,39 @@
-// RHSPIDriver.h
-// Author: Mike McCauley (mikem@airspayce.com)
-// Copyright (C) 2014 Mike McCauley
-// $Id: RHSPIDriver.h,v 1.9 2014/04/23 06:00:59 mikem Exp $
+/*
+ * RHSPIDriver.h
+ *
+ *  Created on: 4 Dec 2016
+ *      Author: pi
+ */
 
-#ifndef RHSPIDriver_h
-#define RHSPIDriver_h
+#ifndef RHSPIDRIVER_H_
+#define RHSPIDRIVER_H_
 
-#include <RHGenericDriver.h>
-#include <RaspberryPiSPI.h>
+#include "RaspberryPiSPI.h"
+#include "RHGenericDriver.h"
+#include <inttypes.h>
 
-// This is the bit in the SPI address that marks it as a write
 #define RH_SPI_WRITE_MASK 0x80
 
-class RHGenericSPI;
-
-/////////////////////////////////////////////////////////////////////
-/// \class RHSPIDriver RHSPIDriver.h <RHSPIDriver.h>
-/// \brief Base class for a RadioHead drivers that use the SPI bus
-/// to communicate with its transport hardware.
-///
-/// This class can be subclassed by Drivers that require to use the SPI bus.
-/// It can be configured to use either the RHHardwareSPI class (if there is one available on the platform)
-/// of the bitbanged RHSoftwareSPI class. The default behaviour is to use a pre-instantiated built-in RHHardwareSPI
-/// interface.
-///
-/// SPI bus access is protected by ATOMIC_BLOCK_START and ATOMIC_BLOCK_END, which will ensure interrupts
-/// are disabled during access.
-///
-/// The read and write routines implement commonly used SPI conventions: specifically that the MSB
-/// of the first byte transmitted indicates that it is a write and the remaining bits indicate the rehgister to access)
-/// This can be overriden
-/// in subclasses if necessaryor an alternative class, RHNRFSPIDriver can be used to access devices like
-/// Nordic NRF series radios, which have different requirements.
-///
-/// Application developers are not expected to instantiate this class directly:
-/// it is for the use of Driver developers.
-class RHSPIDriver : public RHGenericDriver
-{
+class RHSPIDriver : public RHGenericDriver {
 public:
-    /// Constructor
-    /// \param[in] slaveSelectPin The controler pin to use to select the desired SPI device. This pin will be driven LOW
-    /// during SPI communications with the SPI device that uis iused by this Driver.
-    /// \param[in] spi Reference to the SPI interface to use. The default is to use a default built-in Hardware interface.
-    RHSPIDriver(GenericSPI& spi = RaspberryPiSPI);
+	RHSPIDriver(GenericSPI& spi);
+	virtual ~RHSPIDriver();
 
-    /// Initialise the Driver transport hardware and software.
-    /// Make sure the Driver is properly configured before calling init().
-    /// \return true if initialisation succeeded.
-    bool init();
+	bool init();
 
-    /// Reads a single register from the SPI device
-    /// \param[in] reg Register number
-    /// \return The value of the register
-    uint8_t        spiRead(uint8_t reg);
+	uint8_t spiRead(uint8_t reg);
+	uint8_t spiWrite(uint8_t reg, uint8_t val);
+	uint8_t spiBurstRead(uint8_t reg, uint8_t* dest, uint8_t len);
+	uint8_t spiBurstWrite(uint8_t reg, const uint8_t* src, uint8_t len);
 
-    /// Writes a single byte to the SPI device
-    /// \param[in] reg Register number
-    /// \param[in] val The value to write
-    /// \return Some devices return a status byte during the first data transfer. This byte is returned.
-    ///  it may or may not be meaningfule depending on the the type of device being accessed.
-    uint8_t           spiWrite(uint8_t reg, uint8_t val);
+	bool available(){return false;};
 
-    /// Reads a number of consecutive registers from the SPI device using burst read mode
-    /// \param[in] reg Register number of the first register
-    /// \param[in] dest Array to write the register values to. Must be at least len bytes
-    /// \param[in] len Number of bytes to read
-    /// \return Some devices return a status byte during the first data transfer. This byte is returned.
-    ///  it may or may not be meaningfule depending on the the type of device being accessed.
-    uint8_t           spiBurstRead(uint8_t reg, uint8_t* dest, uint8_t len);
-
-    /// Write a number of consecutive registers using burst write mode
-    /// \param[in] reg Register number of the first register
-    /// \param[in] src Array of new register values to write. Must be at least len bytes
-    /// \param[in] len Number of bytes to write
-    /// \return Some devices return a status byte during the first data transfer. This byte is returned.
-    ///  it may or may not be meaningfule depending on the the type of device being accessed.
-    uint8_t           spiBurstWrite(uint8_t reg, const uint8_t* src, uint8_t len);
-
+	bool recv(uint8_t* buf, uint8_t* len){return false;};
+	bool send(const uint8_t* data, uint8_t len){return false;};
+	uint8_t maxMessageLength(){return 10;};
+private:
 protected:
-    /// Reference to the RHGenericSPI instance to use to trasnfer data with teh SPI device
-    GenericSPI&       _spi;
-
-    /// The pin number of the Slave Selct pin that is used to select the desired device.
+	GenericSPI&_spi;
 };
 
-#endif
+#endif /* RHSPIDRIVER_H_ */

@@ -3,7 +3,7 @@
 // Copyright (C) 2014 Mike McCauley
 // $Id: RHGenericDriver.cpp,v 1.11 2014/07/01 01:23:58 mikem Exp mikem $
 
-#include <RHGenericDriver.h>
+#include "RHGenericDriver.h"
 
 RHGenericDriver::RHGenericDriver()
     :
@@ -27,8 +27,8 @@ bool RHGenericDriver::init()
 // Blocks until a valid message is received
 void RHGenericDriver::waitAvailable()
 {
-    while (!available())
-	YIELD;
+    while (!available()){}
+	//YIELD;
 }
 
 // Blocks until a valid message is received or timeout expires
@@ -36,32 +36,32 @@ void RHGenericDriver::waitAvailable()
 // Works correctly even on millis() rollover
 bool RHGenericDriver::waitAvailableTimeout(uint16_t timeout)
 {
-    unsigned long starttime = millis();
+    /*unsigned long starttime = millis();
     while ((millis() - starttime) < timeout)
     {
         if (available())
            return true;
-	YIELD;
-    }
+	//YIELD;
+    }*/
     return false;
 }
 
 bool RHGenericDriver::waitPacketSent()
 {
-    while (_mode == RHModeTx)
-	YIELD; // Wait for any previous transmit to finish
+    while (_mode == RHModeTx){}
+	//YIELD; // Wait for any previous transmit to finish
     return true;
 }
 
 bool RHGenericDriver::waitPacketSent(uint16_t timeout)
 {
-    unsigned long starttime = millis();
+    /*unsigned long starttime = millis();
     while ((millis() - starttime) < timeout)
     {
         if (_mode != RHModeTx) // Any previous transmit finished?
            return true;
-	YIELD;
-    }
+	//YIELD;
+    }*/
     return false;
 }
 
@@ -134,7 +134,11 @@ void  RHGenericDriver::setMode(RHMode mode)
 // Diagnostic help
 void RHGenericDriver::printBuffer(const char* prompt, const uint8_t* buf, uint8_t len)
 {
-    uint8_t i;
+
+	for(int i = 0;i<len;i++)
+		printf("%x ",buf[i]);
+	printf("\n");
+    /*uint8_t i;
 
     Serial.println(prompt);
     for (i = 0; i < len; i++)
@@ -147,6 +151,6 @@ void RHGenericDriver::printBuffer(const char* prompt, const uint8_t* buf, uint8_
 	    Serial.print(' ');
 	}
     }
-    Serial.println(' ');
+    Serial.println(' ');*/
 }
 

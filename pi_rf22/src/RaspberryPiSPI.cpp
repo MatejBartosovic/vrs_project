@@ -11,13 +11,15 @@
 
 void RaspberryPiSPI::begin(){
 
-	if(!bcm2835_spi_begin())
+	if(!bcm2835_spi_begin()){
 		printf("begin failed");
+	}
 	bcm2835_spi_setChipSelectPolarity(cs,0);
     bcm2835_spi_setClockDivider(divider);
 	bcm2835_spi_setDataMode(dataMode);
 	bcm2835_spi_chipSelect(cs);
     bcm2835_spi_setBitOrder(bitOrder);
+    return ;
 };
 
 void RaspberryPiSPI::end(){
