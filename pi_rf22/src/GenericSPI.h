@@ -27,7 +27,7 @@
 /// - begin()
 /// - end() 
 /// - transfer()
-class RHGenericSPI 
+class GenericSPI
 {
 public:
 
@@ -40,9 +40,9 @@ public:
     typedef enum
     {
 	DataMode0 = 0, ///< SPI Mode 0: CPOL = 0, CPHA = 0
-	DataMode1,     ///< SPI Mode 1: CPOL = 0, CPHA = 1
-	DataMode2,     ///< SPI Mode 2: CPOL = 1, CPHA = 0
-	DataMode3,     ///< SPI Mode 3: CPOL = 1, CPHA = 1
+	DataMode1 = 1,     ///< SPI Mode 1: CPOL = 0, CPHA = 1
+	DataMode2 = 2,     ///< SPI Mode 2: CPOL = 1, CPHA = 0
+	DataMode3 = 3,     ///< SPI Mode 3: CPOL = 1, CPHA = 1
     } DataMode;
 
     /// \brief Defines constants for different SPI bus frequencies
@@ -82,12 +82,14 @@ public:
     /// \param[in] bitOrder Select the SPI bus bit order, one of RHGenericSPI::BitOrderMSBFirst or 
     /// RHGenericSPI::BitOrderLSBFirst.
     /// \param[in] dataMode Selects the SPI bus data mode. One of RHGenericSPI::DataMode
-    RHGenericSPI(Frequency frequency = Frequency1MHz, BitOrder bitOrder = BitOrderMSBFirst, DataMode dataMode = DataMode0);
+    GenericSPI(Frequency frequency = Frequency1MHz, BitOrder bitOrder = BitOrderMSBFirst, DataMode dataMode = DataMode0);
 
     /// Transfer a single octet to and from the SPI interface
     /// \param[in] data The octet to send
     /// \return The octet read from SPI while the data octet was sent
     virtual uint8_t transfer(uint8_t data) = 0;
+
+    virtual void transfernb(char* tbuf, char* rbuf,uint32_t len) = 0;
 
     /// SPI Configuration methods
     /// Enable SPI interrupts (if supported)
@@ -100,7 +102,7 @@ public:
 
     /// Initialise the SPI library.
     /// Call this after configuring and before using the SPI library
-    virtual void begin() = 0;
+    virtual void begin() = 0 ;
 
     /// Disables the SPI bus (leaving pin modes unchanged). 
     /// Call this after you have finished using the SPI interface
@@ -110,19 +112,21 @@ public:
     /// Sets the order of the bits shifted out of and into the SPI bus, either 
     /// LSBFIRST (least-significant bit first) or MSBFIRST (most-significant bit first). 
     /// \param[in] bitOrder Bit order to be used: one of RHGenericSPI::BitOrder
-    virtual void setBitOrder(BitOrder bitOrder);
+    void setBitOrder(BitOrder bitOrder);
 
     /// Sets the SPI data mode: that is, clock polarity and phase. 
     /// See the Wikipedia article on SPI for details. 
     /// \param[in] dataMode The mode to use: one of RHGenericSPI::DataMode
-    virtual void setDataMode(DataMode dataMode);
+    void setDataMode(DataMode dataMode);
 
     /// Sets the SPI clock divider relative to the system clock. 
     /// On AVR based boards, the dividers available are 2, 4, 8, 16, 32, 64 or 128. 
     /// The default setting is SPI_CLOCK_DIV4, which sets the SPI clock to one-quarter 
     /// the frequency of the system clock (4 Mhz for the boards at 16 MHz). 
     /// \param[in] frequency The data rate to use: one of RHGenericSPI::Frequency
-    virtual void setFrequency(Frequency frequency);
+    void setFrequency(Frequency frequency);
+
+    virtual ~GenericSPI();
 
 protected:
     /// The configure SPI Bus frequency, one of RHGenericSPI::Frequency

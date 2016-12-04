@@ -4,15 +4,18 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/RHGenericSPI.cpp \
+../src/GenericSPI.cpp \
+../src/RaspberryPiSPI.cpp \
 ../src/pi_rf22.cpp 
 
 OBJS += \
-./src/RHGenericSPI.o \
+./src/GenericSPI.o \
+./src/RaspberryPiSPI.o \
 ./src/pi_rf22.o 
 
 CPP_DEPS += \
-./src/RHGenericSPI.d \
+./src/GenericSPI.d \
+./src/RaspberryPiSPI.d \
 ./src/pi_rf22.d 
 
 
