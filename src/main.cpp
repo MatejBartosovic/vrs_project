@@ -27,9 +27,8 @@ SOFTWARE.
 */
 
 /* Includes */
-#include <stddef.h>
-#include "stm32l1xx.h"
 
+#include <pwm.h>
 
 /* Private typedef */
 /* Private define  */
@@ -68,12 +67,15 @@ int main(void)
   */
 
   /* TODO - Add your application code here */
-
+  vystupinitGPIO();
+  InitializeTimer();
+  InitializePWMChannel();
 
   /* Infinite loop */
   while (1)
   {
 	i++;
+
   }
   return 0;
 }
