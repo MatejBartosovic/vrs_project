@@ -7,46 +7,46 @@
 
 #include <pwm.h>
 
-
-
-
 void InitializeTimer()
 {
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 
     TIM_TimeBaseInitTypeDef timerInitStructure;
-    timerInitStructure.TIM_Prescaler = 32-1;
+    timerInitStructure.TIM_Prescaler = 16-1; //clock=16MHz
     timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
     timerInitStructure.TIM_Period = 20000-1;
     timerInitStructure.TIM_ClockDivision = 0;
-    TIM_TimeBaseInit(TIM2, &timerInitStructure);
-    TIM_Cmd(TIM2, ENABLE);
+    TIM_TimeBaseInit(TIM4, &timerInitStructure);
+    TIM_Cmd(TIM4, ENABLE);
 }
 
 void InitializePWMChannel()
 {
     TIM_OCInitTypeDef outputChannelInit ;
     outputChannelInit.TIM_OCMode = TIM_OCMode_PWM1;
-    outputChannelInit.TIM_Pulse = 1700;
+    outputChannelInit.TIM_Pulse = 1100;
     outputChannelInit.TIM_OutputState = TIM_OutputState_Enable;
     outputChannelInit.TIM_OCPolarity = TIM_OCPolarity_High;
 
-    TIM_OC1Init(TIM2, &outputChannelInit);
-    TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);
+    TIM_OC1Init(TIM4, &outputChannelInit);
+    TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
 }
 
 void vystupinitGPIO()
 {
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
     GPIO_InitTypeDef gpioStructure;
-    gpioStructure.GPIO_Pin = GPIO_Pin_2;
+    gpioStructure.GPIO_Pin = GPIO_Pin_6;
     gpioStructure.GPIO_Mode = GPIO_Mode_AF;
     gpioStructure.GPIO_OType = GPIO_OType_PP;
     gpioStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     gpioStructure.GPIO_Speed = GPIO_Speed_40MHz;
-    GPIO_Init(GPIOA, &gpioStructure);
+    GPIO_Init(GPIOB, &gpioStructure);
 
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_TIM2);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
 }
+
+
+
