@@ -47,6 +47,8 @@ SOFTWARE.
 */
 int main(void)
 {
+	int pwm;
+	uint32_t i;
 	InitializeTimer();
 	InitializePWMChannel();
 	vystupinitGPIO();
@@ -54,6 +56,14 @@ int main(void)
 	/* Infinite loop */
 	while (1)
 	{
+		for( pwm = 1000; pwm < 2000; pwm++ )
+		{
+			TIM4->CCR1 = pwm;
+			for( i = 0; i< 6000; i++)
+			{
+				TIM4->CCR1 = pwm;
+			}
+		}
 
 	}
 	return 0;
