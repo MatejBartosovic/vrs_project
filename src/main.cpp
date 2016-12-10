@@ -30,6 +30,11 @@ SOFTWARE.
 #include <stddef.h>
 #include "stm32l1xx.h"
 
+//my includes
+#include <Usart2.h>
+#include <Spi1.h>
+#include <basicSetup.h>
+
 
 /* Private typedef */
 /* Private define  */
@@ -46,10 +51,8 @@ SOFTWARE.
 **
 **===========================================================================
 */
-int main(void)
-{
-  int i = 0;
-
+Usart2 usart;
+int main(void){
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates 
@@ -67,13 +70,28 @@ int main(void)
   *  system_stm32l1xx.c file
   */
 
-  /* TODO - Add your application code here */
+	//setup core frequency
+	sysClockSetup();
+
+	//setup nvic priority
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+
+	//setup spi
+	Spi1 spi;
+	spi.init();
+
+	//setup usart
+	usart.init();
+
+	uint8_t posli[] = {'s','t','a','r','t','\n'};
+	usart.write(posli,6);
 
 
-  /* Infinite loop */
+	/* Infinite loop */
+
   while (1)
   {
-	i++;
+		asm("nop");
   }
   return 0;
 }
@@ -98,6 +116,10 @@ void assert_failed(uint8_t* file, uint32_t line)
   }
 }
 #endif
+
+extern "C" void USART2_IRQHandler (void){
+	usart.irqHandler();
+}
 
 /*
  * Minimal __assert_func used by the assert() macro
