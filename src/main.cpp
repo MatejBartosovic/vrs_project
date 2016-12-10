@@ -86,7 +86,6 @@ int main(void){
 	uint8_t posli[] = {'s','t','a','r','t','\n'};
 	usart.write(posli,6);
 
-
 	/* Infinite loop */
 
   while (1)
