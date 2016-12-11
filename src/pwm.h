@@ -19,7 +19,9 @@
 
 void InitializeTimer();
 void InitializePWMChannel();
+void InitializePWMChannel2();
 void vystupinitGPIO();
+void vystupinit2GPIO();
 
 
 #endif /* PWM_H_ */

@@ -49,19 +49,22 @@ int main(void)
 {
 	int pwm;
 	uint32_t i;
+	vystupinitGPIO();
+	vystupinit2GPIO();
 	InitializeTimer();
 	InitializePWMChannel();
-	vystupinitGPIO();
-
+	InitializePWMChannel2();
 	/* Infinite loop */
 	while (1)
 	{
-		for( pwm = 1000; pwm < 2000; pwm++ )
+		for( pwm = 1200; pwm < 1800; pwm++ )
 		{
 			TIM4->CCR1 = pwm;
+			TIM4->CCR3 = pwm;
 			for( i = 0; i< 6000; i++)
 			{
 				TIM4->CCR1 = pwm;
+				TIM4->CCR3 = pwm;
 			}
 		}
 
