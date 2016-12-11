@@ -34,6 +34,7 @@ SOFTWARE.
 #include <Usart2.h>
 #include <Spi1.h>
 #include <basicSetup.h>
+#include <Rfm22.h>
 
 
 /* Private typedef */
@@ -70,6 +71,9 @@ int main(void){
   *  system_stm32l1xx.c file
   */
 
+	initLED();
+	GPIO_ResetBits(GPIOA,GPIO_Pin_5);
+
 	//setup core frequency
 	sysClockSetup();
 
@@ -83,14 +87,15 @@ int main(void){
 	//setup usart
 	usart.init();
 
-	uint8_t posli[] = {'s','t','a','r','t','\n'};
-	usart.write(posli,6);
+	Rfm22 transmitter(spi);
+	transmitter.init();
 
 	/* Infinite loop */
-
+uint32_t rrr;
   while (1)
   {
 		asm("nop");
+		rrr++;
   }
   return 0;
 }
@@ -119,6 +124,13 @@ void assert_failed(uint8_t* file, uint32_t line)
 extern "C" void USART2_IRQHandler (void){
 	usart.irqHandler();
 }
+
+extern "C" void EXTI15_10_IRQHandler(void) {
+	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
+    if (EXTI_GetITStatus(EXTI_Line10) != RESET) {
+        EXTI_ClearITPendingBit(EXTI_Line10);
+    }
+}//*/
 
 /*
  * Minimal __assert_func used by the assert() macro

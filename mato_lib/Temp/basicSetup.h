@@ -12,5 +12,6 @@
 #include "stm32l1xx.h"
 
 void sysClockSetup();
+void initLED();
 
 #endif /* BASICSETUP_H_ */

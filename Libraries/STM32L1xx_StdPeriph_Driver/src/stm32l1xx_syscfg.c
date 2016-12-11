@@ -192,6 +192,7 @@ void SYSCFG_USBPuCmd(FunctionalState NewState)
 /**
   * @brief  Selects the GPIO pin used as EXTI Line.
   * @param  EXTI_PortSourceGPIOx : selects the GPIO port to be used as source 
+  *
   *                                for EXTI lines where x can be (A, B, C, D, E, F, G or H).
   * @param  EXTI_PinSourcex: specifies the EXTI line to be configured.
   *         This parameter can be EXTI_PinSourcex where x can be (0..15).
