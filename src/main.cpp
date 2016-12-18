@@ -47,10 +47,10 @@ SOFTWARE.
 int main(void)
 {
 
-
-
+	int pwm;
+	int i;
 	sysClockSetup();
- 	vystupinitGPIO();
+	vystupinitGPIO();
 	vystupinit2GPIO();
 	InitializeTimer();
 	InitializePWMChannel();
