@@ -127,7 +127,7 @@ void usart_init()
 		NVIC_Init(&NVIC_InitStructure);
 
 		//interrupt
-		USART_ITConfig(USART2, USART_IT_TC, ENABLE);
+		//USART_ITConfig(USART2, USART_IT_TC, ENABLE);
 		USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 
 		USART_Cmd(USART2, ENABLE);
@@ -144,7 +144,7 @@ extern "C" void USART2_IRQHandler(void){
 		// Send data back for verification
 		USART_SendData(USART2,value);
 
-		TIM4->CCR3 = value; // pre servo, PWM = 2000, value = cca 120-180
+		TIM4->CCR1 = value; // pre servo, PWM = 2000, value = cca 120-180
 
 	}
 

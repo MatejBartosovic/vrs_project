@@ -25,7 +25,6 @@ void vystupinitGPIO();
 void vystupinit2GPIO();
 void sysClockSetup();
 void usart_init();
-extern "C" void USART2_IRQHandler(void);
 
 
 
