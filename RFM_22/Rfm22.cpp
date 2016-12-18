@@ -415,8 +415,7 @@ void Rfm22::enableInterrupts(){
 
 }
 
-void Rfm22::irqHandler(){
-    uint8_t _lastInterruptFlags[2];
+uint8_t* Rfm22::irqHandler(){
     // Read the interrupt flags which clears the interrupt
     spi.readRegBytes(RH_RF22_REG_03_INTERRUPT_STATUS1, _lastInterruptFlags, 2);
 
@@ -457,7 +456,7 @@ void Rfm22::irqHandler(){
     	{
     	    currentMode = Rfm22ModeIdle;
     	    clearRxBuf();
-    	    return; // Hmmm receiver buffer overflow.
+    	    return _lastInterruptFlags; // Hmmm receiver buffer overflow.
     	}
 
     	spi.readRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _bufLen, len - _bufLen);
@@ -483,4 +482,5 @@ void Rfm22::irqHandler(){
     	resetRxFifo();
     	clearRxBuf();
     }
+    return _lastInterruptFlags;
 }

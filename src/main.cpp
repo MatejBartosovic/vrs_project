@@ -53,7 +53,9 @@ SOFTWARE.
 **===========================================================================
 */
 Usart2 usart;
-uint8_t a[] = {'i','n','t','\n'};
+uint8_t a[] = {0x55,0x55,0x55};
+Spi1 spi;
+Rfm22 transmitter(spi);//*/
 int main(void){
   /**
   *  IMPORTANT NOTE!
@@ -82,14 +84,15 @@ int main(void){
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
 	//setup spi
-	Spi1 spi;
 	spi.init();
 
 	//setup usart
 	usart.init();
+	usart.write(a,3);
 
-	Rfm22 transmitter(spi);
+	//Rfm22 transmitter(spi);
 	transmitter.init();
+	transmitter.setModeRx();
 
 	/* Infinite loop */
 uint32_t rrr;
@@ -130,7 +133,8 @@ extern "C" void EXTI15_10_IRQHandler(void) {
 	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
     if (EXTI_GetITStatus(EXTI_Line10) != RESET) {
         EXTI_ClearITPendingBit(EXTI_Line10);
-        usart.write(a,4);
+        usart.write(a,3);
+        usart.write(transmitter.irqHandler(),2);
     }
 }//*/
 

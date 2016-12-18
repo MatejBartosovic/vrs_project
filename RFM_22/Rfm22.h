@@ -1016,10 +1016,12 @@ public:
 	virtual ~Rfm22();
 
 	void setGpioReversed(bool gpioReversed);
+
+	virtual uint8_t* irqHandler();
+
 protected:
 	virtual void setupInterrupts();
 	virtual void enableInterrupts();
-	virtual void irqHandler();
 	SpiGeneric& spi;
 	Rfm22Mode currentMode;
 
@@ -1037,6 +1039,8 @@ protected:
     uint8_t _bufLen;
     uint8_t _txBufSentIndex;
     uint8_t _buf[RH_RF22_MAX_MESSAGE_LEN];
+
+    uint8_t _lastInterruptFlags[2];
 };
 
 #endif /* RFM22_H_ */
