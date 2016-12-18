@@ -37,7 +37,6 @@ SOFTWARE.
 /* Private function prototypes */
 /* Private functions */
 
-
 /**
 **===========================================================================
 **
@@ -47,17 +46,22 @@ SOFTWARE.
 */
 int main(void)
 {
-	int pwm;
-	uint32_t i;
-	vystupinitGPIO();
+
+
+
+	sysClockSetup();
+ 	vystupinitGPIO();
 	vystupinit2GPIO();
 	InitializeTimer();
 	InitializePWMChannel();
 	InitializePWMChannel2();
-	/* Infinite loop */
+	usart_init();
+
+
 	while (1)
 	{
-		for( pwm = 1200; pwm < 1800; pwm++ )
+
+		/*for( pwm = 150; pwm < 180; pwm++ )
 		{
 			TIM4->CCR1 = pwm;
 			TIM4->CCR3 = pwm;
@@ -67,7 +71,21 @@ int main(void)
 				TIM4->CCR3 = pwm;
 			}
 		}
-
+		for( i = 0; i< 20000; i++)
+		{
+			TIM4->CCR1 = 150;
+			TIM4->CCR3 = 150;
+		}
+		for( pwm = 150; pwm > 120; pwm-- )
+				{
+					TIM4->CCR1 = pwm;
+					TIM4->CCR3 = pwm;
+					for( i = 0; i< 6000; i++)
+					{
+						TIM4->CCR1 = pwm;
+						TIM4->CCR3 = pwm;
+					}
+				}*/
 	}
 	return 0;
 }
