@@ -52,7 +52,9 @@ static const Rfm22::ModemConfig MODEM_CONFIG_TABLE[] =
        { 0x98, 0x03, 0x96, 0x00, 0xda, 0x74, 0x00, 0xdc, 0x28, 0x1f, 0x29, 0x80, 0x60, 0x0a, 0x3d, 0x0c, 0x21, 0x08 }, // 40, 335
    };
 
-Rfm22::Rfm22(SpiGeneric& spi) : spi(spi), currentMode(Rfm22ModeInitialising) {
+Rfm22::Rfm22(SpiGeneric& spi) : spi(spi), currentMode(Rfm22ModeInitialising),_txHeaderTo(0xff),
+								_thisAddress(0xff),_txHeaderFrom(0xff),_txHeaderId(0),_txHeaderFlags(0),
+								_bufLen(0),_txBufSentIndex(0){
 	// TODO Auto-generated constructor stub
 }
 
@@ -106,62 +108,35 @@ void Rfm22::init(){
 
 }
 
+uint8_t Rfm22::rssiRead()
+{
+    return spi.readReg(RH_RF22_REG_26_RSSI);
+}
+
+uint8_t Rfm22::ezmacStatusRead()
+{
+    return spi.readReg(RH_RF22_REG_31_EZMAC_STATUS);
+}
+
+bool Rfm22::setFHStepSize(uint8_t fhs){
+    spi.writeReg(RH_RF22_REG_7A_FREQUENCY_HOPPING_STEP_SIZE, fhs);
+    return !(statusRead() & RH_RF22_FREQERR);
+}
+bool Rfm22::setFHChannel(uint8_t fhch){
+	spi.writeReg(RH_RF22_REG_79_FREQUENCY_HOPPING_CHANNEL_SELECT, fhch);
+	return !(statusRead() & RH_RF22_FREQERR);
+}
+
+void Rfm22::setTxPower(uint8_t power){
+	 spi.writeReg(RH_RF22_REG_6D_TX_POWER, power | RH_RF22_LNA_SW); // On RF23, LNA_SW must be set.
+}
+
 void Rfm22::reset(){
 	spi.writeReg(RH_RF22_REG_07_OPERATING_MODE1, RH_RF22_SWRES);
+	for(int i =0; i<1000;i++){
+
+	}
 }
-
-Rfm22::~Rfm22() {
-	// TODO Auto-generated destructor stub
-}
-/*
- *
- * Protected functions
- *
- * */
-
-void Rfm22::setupInterrupts(){
-	GPIO_InitTypeDef GPIO_InitStruct;
-	EXTI_InitTypeDef EXTI_InitStruct;
-	NVIC_InitTypeDef NVIC_InitStruct;
-
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_40MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource10);
-
-	EXTI_InitStruct.EXTI_Line = EXTI_Line10;
-	EXTI_InitStruct.EXTI_LineCmd = ENABLE;
-	EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
-	EXTI_Init(&EXTI_InitStruct);
-
-	NVIC_InitStruct.NVIC_IRQChannel = EXTI15_10_IRQn;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 12;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStruct);
-
-	EXTI_ClearITPendingBit(EXTI_Line10);
-}
-
-void Rfm22::enableInterrupts(){
-	uint8_t data[] = {RH_RF22_ENTXFFAEM | RH_RF22_ENRXFFAFULL | RH_RF22_ENPKSENT | RH_RF22_ENPKVALID | RH_RF22_ENCRCERROR | RH_RF22_ENFFERR, RH_RF22_REG_06_INTERRUPT_ENABLE2, RH_RF22_ENPREAVAL};
-	spi.writeRegBytes(RH_RF22_REG_05_INTERRUPT_ENABLE1,data,2);
-
-}
-
-/**
- *
- * Private function
- *
- * */
 
 void Rfm22::setModeIdle()
 {
@@ -262,13 +237,6 @@ bool Rfm22::setModemConfig(ModemConfigChoice index)
 
 void Rfm22::setModemRegisters(ModemConfig* config)
 {
-    /*spiWrite(RH_RF22_REG_1C_IF_FILTER_BANDWIDTH,                    config->reg_1c);
-    spiWrite(RH_RF22_REG_1F_CLOCK_RECOVERY_GEARSHIFT_OVERRIDE,      config->reg_1f);
-    spiBurstWrite(RH_RF22_REG_20_CLOCK_RECOVERY_OVERSAMPLING_RATE, &config->reg_20, 6);
-    spiBurstWrite(RH_RF22_REG_2C_OOK_COUNTER_VALUE_1,              &config->reg_2c, 3);
-    spiWrite(RH_RF22_REG_58_CHARGE_PUMP_CURRENT_TRIMMING,           config->reg_58);
-    spiWrite(RH_RF22_REG_69_AGC_OVERRIDE1,                          config->reg_69);
-    spiBurstWrite(RH_RF22_REG_6E_TX_DATA_RATE1,                    &config->reg_6e, 5);*/
 
     spi.writeReg(RH_RF22_REG_1C_IF_FILTER_BANDWIDTH,                    config->reg_1c);
     spi.writeReg(RH_RF22_REG_1F_CLOCK_RECOVERY_GEARSHIFT_OVERRIDE,      config->reg_1f);
@@ -301,7 +269,218 @@ void Rfm22::setGpioReversed(bool gpioReversed)
     spi.writeRegBytes(RH_RF22_REG_0B_GPIO_CONFIGURATION0,data,2);
 }
 
-void Rfm22::setTxPower(uint8_t power)
+bool Rfm22::send(uint8_t* data, uint8_t len)
 {
-    spi.writeReg(RH_RF22_REG_6D_TX_POWER, power | RH_RF22_LNA_SW); // On RF23, LNA_SW must be set.
+    bool ret = true;
+    waitPacketSent();
+    //TODO atomic block zmazany
+    spi.writeReg(RH_RF22_REG_3A_TRANSMIT_HEADER3, _txHeaderTo);
+    spi.writeReg(RH_RF22_REG_3B_TRANSMIT_HEADER2, _txHeaderFrom);
+    spi.writeReg(RH_RF22_REG_3C_TRANSMIT_HEADER1, _txHeaderId);
+    spi.writeReg(RH_RF22_REG_3D_TRANSMIT_HEADER0, _txHeaderFlags);
+    if (!fillTxBuf(data, len))
+	ret = false;
+    else
+	startTransmit();
+    //TODO atomic unblock zmazany
+//    printBuffer("send:", data, len);
+    return ret;
+}
+
+bool Rfm22::waitPacketSent()
+{
+    while (currentMode == Rfm22ModeTx){}
+    return true;
+}
+
+bool Rfm22::fillTxBuf(const uint8_t* data, uint8_t len)
+{
+    clearTxBuf();
+    if (!len)
+	return false;
+    return appendTxBuf(data, len);
+}
+
+void Rfm22::clearTxBuf()
+{
+    _bufLen = 0;
+    _txBufSentIndex = 0;
+}
+
+bool Rfm22::appendTxBuf(const uint8_t* data, uint8_t len)
+{
+    if (((uint16_t)_bufLen + len) > RH_RF22_MAX_MESSAGE_LEN)
+	return false;
+    memcpy(_buf + _bufLen, data, len);
+    _bufLen += len;
+//    printBuffer("txbuf:", _buf, _bufLen);
+    return true;
+}
+
+void Rfm22::startTransmit()
+{
+    sendNextFragment(); // Actually the first fragment
+    spi.writeReg(RH_RF22_REG_3E_PACKET_LENGTH, _bufLen); // Total length that will be sent
+    setModeTx(); // Start the transmitter, turns off the receiver
+}
+
+void Rfm22::sendNextFragment()
+{
+    if (_txBufSentIndex < _bufLen)
+    {
+	// Some left to send?
+	uint8_t len = _bufLen - _txBufSentIndex;
+	// But dont send too much
+	if (len > (RH_RF22_FIFO_SIZE - RH_RF22_TXFFAEM_THRESHOLD - 1))
+	    len = (RH_RF22_FIFO_SIZE - RH_RF22_TXFFAEM_THRESHOLD - 1);
+	spi.writeRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _txBufSentIndex, len);
+//	printBuffer("frag:", _buf  + _txBufSentIndex, len);
+	_txBufSentIndex += len;
+    }
+}
+
+void Rfm22::readNextFragment()
+{
+    if (((uint16_t)_bufLen + RH_RF22_RXFFAFULL_THRESHOLD) > RH_RF22_MAX_MESSAGE_LEN)
+	return; // Hmmm receiver overflow. Should never occur
+
+    // Read the RH_RF22_RXFFAFULL_THRESHOLD octets that should be there
+    spi.readRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _bufLen, RH_RF22_RXFFAFULL_THRESHOLD);
+    _bufLen += RH_RF22_RXFFAFULL_THRESHOLD;
+}
+
+// Clear the FIFOs
+void Rfm22::resetFifos()
+{
+    spi.writeReg(RH_RF22_REG_08_OPERATING_MODE2, RH_RF22_FFCLRRX | RH_RF22_FFCLRTX);
+    spi.writeReg(RH_RF22_REG_08_OPERATING_MODE2, 0);
+}
+
+void Rfm22::restartTransmit()
+{
+    currentMode = Rfm22ModeIdle;
+    _txBufSentIndex = 0;
+    startTransmit();
+}
+
+void Rfm22::clearRxBuf()
+{
+    _bufLen = 0;
+}
+
+Rfm22::~Rfm22() {
+	// TODO Auto-generated destructor stub
+}
+/*
+ *
+ * Protected functions
+ *
+ * */
+
+void Rfm22::setupInterrupts(){
+	GPIO_InitTypeDef GPIO_InitStruct;
+	EXTI_InitTypeDef EXTI_InitStruct;
+	NVIC_InitTypeDef NVIC_InitStruct;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_40MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource10);
+
+	EXTI_InitStruct.EXTI_Line = EXTI_Line10;
+	EXTI_InitStruct.EXTI_LineCmd = ENABLE;
+	EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Falling;
+	EXTI_Init(&EXTI_InitStruct);
+
+	NVIC_InitStruct.NVIC_IRQChannel = EXTI15_10_IRQn;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 12;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStruct);
+
+	EXTI_ClearITPendingBit(EXTI_Line10);
+}
+
+void Rfm22::enableInterrupts(){
+	uint8_t data[] = {RH_RF22_ENTXFFAEM | RH_RF22_ENRXFFAFULL | RH_RF22_ENPKSENT | RH_RF22_ENPKVALID | RH_RF22_ENCRCERROR | RH_RF22_ENFFERR, RH_RF22_ENPREAVAL};
+	spi.writeRegBytes(RH_RF22_REG_05_INTERRUPT_ENABLE1,data,2);
+
+}
+
+void Rfm22::irqHandler(){
+    uint8_t _lastInterruptFlags[2];
+    // Read the interrupt flags which clears the interrupt
+    spi.readRegBytes(RH_RF22_REG_03_INTERRUPT_STATUS1, _lastInterruptFlags, 2);
+
+    if (_lastInterruptFlags[0] & RH_RF22_IFFERROR){
+    	resetFifos(); // Clears the interrupt
+    	if (currentMode == Rfm22ModeTx )
+    	    restartTransmit();
+    	else if (currentMode == Rfm22ModeRx)
+    	    clearRxBuf();
+    }
+        // Caution, any delay here may cause a FF underflow or overflow
+    if (_lastInterruptFlags[0] & RH_RF22_ITXFFAEM){
+        	// See if more data has to be loaded into the Tx FIFO
+        	sendNextFragment();
+    }
+    if (_lastInterruptFlags[0] & RH_RF22_IRXFFAFULL){
+    	// Caution, any delay here may cause a FF overflow
+    	// Read some data from the Rx FIFO
+    	readNextFragment();
+    }
+    if (_lastInterruptFlags[0] & RH_RF22_IPKSENT){
+    //	Serial.println("IPKSENT");
+    	// Transmission does not automatically clear the tx buffer.
+    	// Could retransmit if we wanted
+    	// RH_RF22 transitions automatically to Idle
+    	currentMode = Rfm22ModeIdle;
+    }
+    if (_lastInterruptFlags[0] & RH_RF22_IPKVALID){
+    	uint8_t len = spi.readReg(RH_RF22_REG_4B_RECEIVED_PACKET_LENGTH);
+    //	Serial.println("IPKVALID");
+
+    	// May have already read one or more fragments
+    	// Get any remaining unread octets, based on the expected length
+    	// First make sure we dont overflow the buffer in the case of a stupid length
+    	// or partial bad receives
+    	if (   len >  RH_RF22_MAX_MESSAGE_LEN
+    	    || len < _bufLen)
+    	{
+    	    currentMode = Rfm22ModeIdle;
+    	    clearRxBuf();
+    	    return; // Hmmm receiver buffer overflow.
+    	}
+
+    	spi.readRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _bufLen, len - _bufLen);
+    	_rxHeaderTo = spi.readReg(RH_RF22_REG_47_RECEIVED_HEADER3);
+    	_rxHeaderFrom = spi.readReg(RH_RF22_REG_48_RECEIVED_HEADER2);
+    	_rxHeaderId = spi.readReg(RH_RF22_REG_49_RECEIVED_HEADER1);
+    	_rxHeaderFlags = spi.readReg(RH_RF22_REG_4A_RECEIVED_HEADER0);
+    	_bufLen = len;
+    	currentMode = Rfm22ModeIdle;
+    	//_rxBufValid = true;
+    }
+    if (_lastInterruptFlags[0] & RH_RF22_ICRCERROR){
+    //	Serial.println("ICRCERR");
+    	clearRxBuf();
+    	resetRxFifo();
+    	currentMode = Rfm22ModeIdle;
+    	setModeRx(); // Keep trying
+    }
+    if (_lastInterruptFlags[1] & RH_RF22_IPREAVAL){
+    //	Serial.println("IPREAVAL");
+    	//_lastRssi = (int8_t)(-120 + ((spiRead(RH_RF22_REG_26_RSSI) / 2)));
+    	//_lastPreambleTime = millis();
+    	resetRxFifo();
+    	clearRxBuf();
+    }
 }

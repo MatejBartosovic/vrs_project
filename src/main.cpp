@@ -53,6 +53,7 @@ SOFTWARE.
 **===========================================================================
 */
 Usart2 usart;
+uint8_t a[] = {'i','n','t','\n'};
 int main(void){
   /**
   *  IMPORTANT NOTE!
@@ -95,7 +96,7 @@ uint32_t rrr;
   while (1)
   {
 		asm("nop");
-		rrr++;
+		//rrr = spi.readReg(rrr);
   }
   return 0;
 }
@@ -129,6 +130,7 @@ extern "C" void EXTI15_10_IRQHandler(void) {
 	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
     if (EXTI_GetITStatus(EXTI_Line10) != RESET) {
         EXTI_ClearITPendingBit(EXTI_Line10);
+        usart.write(a,4);
     }
 }//*/
 

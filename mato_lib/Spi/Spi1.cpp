@@ -9,7 +9,6 @@
 
 Spi1::Spi1() {
 	// TODO Auto-generated constructor stub
-
 }
 
 void Spi1::init(){
@@ -27,8 +26,8 @@ void Spi1::init(){
 		//PB3 - SPI2_SCK
 		//PB4 - SPI2_MISO
 		//PB5 - SPI2_MOSI
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;
-		GPIO_Init(GPIOB, &GPIO_InitStructure);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
+		GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 
 		// init cs
@@ -37,15 +36,14 @@ void Spi1::init(){
 		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 		GPIO_Init(GPIOB, &GPIO_InitStructure);
-		GPIO_SetBits(GPIOB,GPIO_Pin_10);
-
+		GPIO_SetBits(GPIOB,GPIO_Pin_6);
 		//init Spi
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource3, GPIO_AF_SPI1);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_SPI1);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_SPI1);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource5, GPIO_AF_SPI1);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_SPI1);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_SPI1);
 
 		SPI_InitTypeDef  SPI_InitStructure;
 		SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
@@ -75,7 +73,7 @@ void Spi1::init(){
 
 		/* SPI Peripheral Enable */
 		spi = SPI1;
-		cs = GPIO_Pin_10;
+		cs = GPIO_Pin_6;
 		gpio_cs = GPIOB;
 		SPI_Cmd(SPI1, ENABLE);
 }

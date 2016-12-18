@@ -893,26 +893,150 @@ public:
 
 
 	Rfm22(SpiGeneric& spi);
+
+    /// Initialises this instance and the radio module connected to it.
+    /// The following steps are taken:
+    /// - Initialise the slave select pin and the SPI interface library
+    /// - Software reset the RH_RF22 module
+    /// - Checks the connected RH_RF22 module is either a RH_RF22_DEVICE_TYPE_RX_TRX or a RH_RF22_DEVICE_TYPE_TX
+    /// - Attaches an interrupt handler
+    /// - Configures the RH_RF22 module
+    /// - Sets the frequency to 434.0 MHz
+    /// - Sets the modem data rate to FSK_Rb2_4Fd36
+    /// \return  true if everything was successful
 	void init();
-	virtual ~Rfm22();
-private:
-	void reset();
-	void setModeIdle();
-	void setModeRx();
-	void setModeTx();
-	void setOpMode(uint8_t mode);
-	void resetRxFifo();
-	bool setFrequency(float centre, float afcPullInRange);
+
+    /// Reads and returns the device status register RH_RF22_REG_02_DEVICE_STATUS
+    /// \return The value of the device status register
 	uint8_t statusRead();
-	bool setModemConfig(ModemConfigChoice index);
+
+    /// Issues a software reset to the
+    /// RH_RF22 module. Blocks for 1ms to ensure the reset is complete.
+	void reset();
+
+    /// Sets the transmitter and receiver centre frequency
+    /// \param[in] centre Frequency in MHz. 240.0 to 960.0. Caution, some versions of RH_RF22 and derivatives
+    /// implemented more restricted frequency ranges.
+    /// \param[in] afcPullInRange Sets the AF Pull In Range in MHz. Defaults to 0.05MHz (50kHz).
+    /// Range is 0.0 to 0.159375
+    /// for frequencies 240.0 to 480MHz, and 0.0 to 0.318750MHz for  frequencies 480.0 to 960MHz,
+    /// \return true if the selected frquency centre + (fhch * fhs) is within range and the afcPullInRange
+    /// is within range
+	bool setFrequency(float centre, float afcPullInRange);
+
+    /// Sets the frequency hopping step size.
+    /// \param[in] fhs Frequency Hopping step size in 10kHz increments
+    /// \return true if centre + (fhch * fhs) is within limits
+    bool        setFHStepSize(uint8_t fhs);
+
+    /// Sets the frequncy hopping channel. Adds fhch * fhs to centre frequency
+    /// \param[in] fhch The channel number
+    /// \return true if the selected frquency centre + (fhch * fhs) is within range
+    bool        setFHChannel(uint8_t fhch);
+
+    /// Reads and returns the current RSSI value from register RH_RF22_REG_26_RSSI. Caution: this is
+    /// in internal units (see figure 31 of RFM22B/23B documentation), not in dBm. If you want to find the RSSI in dBm
+    /// of the last received message, use lastRssi() instead.
+    /// \return The current RSSI value
+	uint8_t rssiRead();
+
+    /// Reads and returns the current EZMAC value from register RH_RF22_REG_31_EZMAC_STATUS
+    /// \return The current EZMAC value
+    uint8_t ezmacStatusRead();
+
+    /// Sets the parameters for the RH_RF22 Idle mode in register RH_RF22_REG_07_OPERATING_MODE.
+    /// Idle mode is the mode the RH_RF22 will be in when not transmitting or receiving. The default idle mode
+    /// is RH_RF22_XTON ie READY mode.
+    /// \param[in] mode Mask of mode bits, using RH_RF22_SWRES, RH_RF22_ENLBD, RH_RF22_ENWT,
+    /// RH_RF22_X32KSEL, RH_RF22_PLLON, RH_RF22_XTON.
+	void setOpMode(uint8_t mode);
+
+    /// If current mode is Rx or Tx changes it to Idle. If the transmitter or receiver is running,
+    /// disables them.
+	void setModeIdle();
+
+	/// If current mode is Tx or Idle, changes it to Rx.
+	/// Starts the receiver in the RH_RF22.
+	void setModeRx();
+
+	/// If current mode is Rx or Idle, changes it to Rx.
+    /// Starts the transmitter in the RH_RF22.
+	void setModeTx();
+
+    /// Sets the transmitter power output level in register RH_RF22_REG_6D_TX_POWER.
+    /// Be a good neighbour and set the lowest power level you need.
+    /// After init(), the power will be set to RH_RF22::RH_RF22_TXPOW_8DBM on RF22B
+    /// or RH_RF22_RF23B_TXPOW_1DBM on an RF23B.
+    /// The highest power available on RF22B is RH_RF22::RH_RF22_TXPOW_20DBM (20dBm).
+    /// The highest power available on RF23B is RH_RF22::RH_RF22_RF23B_TXPOW_13DBM (13dBm).
+    /// Higher powers are available on RF23BP (using RH_RF22_RF23BP_TXPOW_*),
+    /// and then only with an adequate power supply. See comments above.
+    /// Caution: In some countries you may only select certain higher power levels if you
+    /// are also using frequency hopping. Make sure you are aware of the legal
+    /// limitations and regulations in your region.
+    /// \param[in] power Transmitter power level, one of RH_RF22_*TXPOW_*
+    void setTxPower(uint8_t power);
+
+	/// Sets all the registered required to configure the data modem in the RH_RF22, including the data rate,
+	/// bandwidths etc. You cas use this to configure the modem with custom configuraitons if none of the
+	/// canned configurations in ModemConfigChoice suit you.
+	/// \param[in] config A ModemConfig structure containing values for the modem configuration registers.
 	void setModemRegisters(ModemConfig* config);
+
+    /// Select one of the predefined modem configurations. If you need a modem configuration not provided
+    /// here, use setModemRegisters() with your own ModemConfig.
+    /// \param[in] index The configuration choice.
+    /// \return true if index is a valid choice.
+	bool setModemConfig(ModemConfigChoice index);
+
+	void resetRxFifo();
+
+	bool send(uint8_t* data, uint8_t len);
+
+	bool waitPacketSent();
+
+	bool fillTxBuf(const uint8_t* data, uint8_t len);
+
+	void clearTxBuf();
+
+	bool appendTxBuf(const uint8_t* data, uint8_t len);
+
+	void startTransmit();
+
+	void sendNextFragment();
+
+	void readNextFragment();
+
+	void resetFifos();
+
+	void clearRxBuf();
+
+	void restartTransmit();
+
+	virtual ~Rfm22();
+
 	void setGpioReversed(bool gpioReversed);
-	void setTxPower(uint8_t power);
 protected:
 	virtual void setupInterrupts();
 	virtual void enableInterrupts();
+	virtual void irqHandler();
 	SpiGeneric& spi;
 	Rfm22Mode currentMode;
+
+	uint8_t _txHeaderTo;
+	uint8_t _txHeaderFrom;
+	uint8_t _txHeaderId;
+	uint8_t _txHeaderFlags;
+
+	uint8_t _rxHeaderTo;
+	uint8_t _rxHeaderFrom;
+	uint8_t _rxHeaderId;
+	uint8_t _rxHeaderFlags;
+
+	uint8_t _thisAddress;
+    uint8_t _bufLen;
+    uint8_t _txBufSentIndex;
+    uint8_t _buf[RH_RF22_MAX_MESSAGE_LEN];
 };
 
 #endif /* RFM22_H_ */
