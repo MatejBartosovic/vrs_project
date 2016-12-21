@@ -989,39 +989,95 @@ public:
     /// \return true if index is a valid choice.
 	bool setModemConfig(ModemConfigChoice index);
 
-	void resetRxFifo();
-
+    /// Waits until any previous transmit packet is finished being transmitted with waitPacketSent().
+    /// Then loads a message into the transmitter and starts the transmitter. Note that a message length
+    /// of 0 is NOT permitted.
+    /// \param[in] data Array of data to be sent
+    /// \param[in] len Number of bytes of data to send (> 0)
+    /// \return true if the message length was valid and it was correctly queued for transmit
 	bool send(uint8_t* data, uint8_t len);
 
 	bool waitPacketSent();
 
+    /// Fills the transmitter buffer with the data of a mesage to be sent
+    /// \param[in] data Array of data bytes to be sent (1 to 255)
+    /// \param[in] len Number of data bytes in data (> 0)
+    /// \return true if the message length is valid
 	bool fillTxBuf(const uint8_t* data, uint8_t len);
 
-	void clearTxBuf();
-
+    /// Appends the transmitter buffer with the data of a mesage to be sent
+    /// \param[in] data Array of data bytes to be sent (0 to 255)
+    /// \param[in] len Number of data bytes in data
+    /// \return false if the resulting message would exceed RH_RF22_MAX_MESSAGE_LEN, else true
 	bool appendTxBuf(const uint8_t* data, uint8_t len);
 
-	void startTransmit();
+	/// Turns the receiver on if it not already on.
+    /// If there is a valid message available, copy it to buf and return true
+    /// else return false.
+	/// If a message is copied, *len is set to the length (Caution, 0 length messages are permitted).
+    /// You should be sure to call this function frequently enough to not miss any messages
+	/// It is recommended that you call it in your main loop.
+    /// \param[in] buf Location to copy the received message
+    /// \param[in,out] len Pointer to available space in buf. Set to the actual number of octets copied.
+	/// \return true if a valid message was copied to buf
+	bool recv(uint8_t* buf, uint8_t* len);
 
-	void sendNextFragment();
+    /// Starts the receiver and checks whether a received message is available.
+    /// This can be called multiple times in a timeout loop
+    /// \return true if a complete, valid message has been received and is able to be retrieved by
+	bool available();
 
-	void readNextFragment();
-
+    /// Clears the RF22 Rx and Tx FIFOs
+    /// Internal use only
 	void resetFifos();
 
-	void clearRxBuf();
-
+	//restart transmit on failure
 	void restartTransmit();
 
-	virtual ~Rfm22();
-
+	//some shields has switched gpio pins connected to antena
 	void setGpioReversed(bool gpioReversed);
 
 	virtual uint8_t* irqHandler();
 
+	virtual ~Rfm22();
+
 protected:
+
+	//setupinterrupt pin
 	virtual void setupInterrupts();
+
+	//enable interrupts in RFM22
 	virtual void enableInterrupts();
+
+    /// Clears the receiver buffer.
+    /// Internal use only
+	void clearRxBuf();
+
+    /// Clears the transmitter buffer
+    /// Internal use only
+	void clearTxBuf();
+
+    /// Internal function to load the next fragment of
+    /// the current message into the transmitter FIFO
+    /// Internal use only
+	void sendNextFragment();
+
+    /// Start the transmission of the contents
+    /// of the Tx buffer
+	void startTransmit();
+
+    ///  function to copy the next fragment from
+    /// the receiver FIF) into the receiver buffer
+	void readNextFragment();
+
+    /// Clears the RF22 Rx FIFO
+    /// Internal use only
+	void resetRxFifo();
+
+    /// Clears the RF22 Tx FIFO
+    /// Internal use only
+	void resetTxFifo();
+
 	SpiGeneric& spi;
 	Rfm22Mode currentMode;
 
@@ -1039,6 +1095,8 @@ protected:
     uint8_t _bufLen;
     uint8_t _txBufSentIndex;
     uint8_t _buf[RH_RF22_MAX_MESSAGE_LEN];
+
+    volatile bool _rxBufValid;
 
     uint8_t _lastInterruptFlags[2];
 };

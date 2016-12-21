@@ -179,6 +179,12 @@ void Rfm22::resetRxFifo(){
     spi.writeReg(RH_RF22_REG_08_OPERATING_MODE2, 0);
 }
 
+void Rfm22::resetTxFifo()
+{
+	spi.writeReg(RH_RF22_REG_08_OPERATING_MODE2, RH_RF22_FFCLRTX);
+	spi.writeReg(RH_RF22_REG_08_OPERATING_MODE2, 0);
+}
+
 bool Rfm22::setFrequency(float centre, float afcPullInRange)
 {
     uint8_t fbsel = RH_RF22_SBSEL;
@@ -273,7 +279,7 @@ bool Rfm22::send(uint8_t* data, uint8_t len)
 {
     bool ret = true;
     waitPacketSent();
-    //TODO atomic block zmazany
+    //TODO toto treba prerobit na burst write
     spi.writeReg(RH_RF22_REG_3A_TRANSMIT_HEADER3, _txHeaderTo);
     spi.writeReg(RH_RF22_REG_3B_TRANSMIT_HEADER2, _txHeaderFrom);
     spi.writeReg(RH_RF22_REG_3C_TRANSMIT_HEADER1, _txHeaderId);
@@ -282,7 +288,6 @@ bool Rfm22::send(uint8_t* data, uint8_t len)
 	ret = false;
     else
 	startTransmit();
-    //TODO atomic unblock zmazany
 //    printBuffer("send:", data, len);
     return ret;
 }
@@ -366,6 +371,30 @@ void Rfm22::restartTransmit()
 void Rfm22::clearRxBuf()
 {
     _bufLen = 0;
+    _rxBufValid = false;
+}
+
+bool Rfm22::recv(uint8_t* buf, uint8_t* len)
+{
+    if (!available())
+	return false;
+
+    if (buf && len)
+    {
+	if (*len > _bufLen)
+	    *len = _bufLen;
+	memcpy(buf, _buf, *len);
+    }
+    clearRxBuf();
+//    printBuffer("recv:", buf, *len);
+    return true;
+}
+
+bool Rfm22::available()
+{
+    if (!_rxBufValid)
+	setModeRx(); // Make sure we are receiving
+    return _rxBufValid;
 }
 
 Rfm22::~Rfm22() {
@@ -416,6 +445,7 @@ void Rfm22::enableInterrupts(){
 }
 
 uint8_t* Rfm22::irqHandler(){
+
     // Read the interrupt flags which clears the interrupt
     spi.readRegBytes(RH_RF22_REG_03_INTERRUPT_STATUS1, _lastInterruptFlags, 2);
 
@@ -465,6 +495,7 @@ uint8_t* Rfm22::irqHandler(){
     	_rxHeaderId = spi.readReg(RH_RF22_REG_49_RECEIVED_HEADER1);
     	_rxHeaderFlags = spi.readReg(RH_RF22_REG_4A_RECEIVED_HEADER0);
     	_bufLen = len;
+    	_rxBufValid = true;
     	currentMode = Rfm22ModeIdle;
     	//_rxBufValid = true;
     }
