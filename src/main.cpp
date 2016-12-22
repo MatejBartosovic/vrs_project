@@ -53,7 +53,6 @@ SOFTWARE.
 **===========================================================================
 */
 Usart2 usart;
-uint8_t a[] = {0x55,0x55,0x55};
 Spi1 spi;
 Rfm22 transmitter(spi);//*/
 int main(void){
@@ -88,18 +87,20 @@ int main(void){
 
 	//setup usart
 	usart.init();
-	usart.write(a,3);
 
 	//Rfm22 transmitter(spi);
 	transmitter.init();
 	transmitter.setModeRx();
 
+	uint8_t buf[RH_RF22_MAX_MESSAGE_LEN];
+	uint8_t len;
 	/* Infinite loop */
-uint32_t rrr;
   while (1)
   {
-		asm("nop");
-		//rrr = spi.readReg(rrr);
+		if(transmitter.available()){
+			len = transmitter.recv(buf,RH_RF22_MAX_MESSAGE_LEN);
+			usart.write(buf,len);
+		}
   }
   return 0;
 }
@@ -133,8 +134,7 @@ extern "C" void EXTI15_10_IRQHandler(void) {
 	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
     if (EXTI_GetITStatus(EXTI_Line10) != RESET) {
         EXTI_ClearITPendingBit(EXTI_Line10);
-        usart.write(a,3);
-        usart.write(transmitter.irqHandler(),2);
+        transmitter.irqHandler();
     }
 }//*/
 

@@ -374,20 +374,20 @@ void Rfm22::clearRxBuf()
     _rxBufValid = false;
 }
 
-bool Rfm22::recv(uint8_t* buf, uint8_t* len)
+uint8_t Rfm22::recv(uint8_t* buf, uint8_t len)
 {
     if (!available())
-	return false;
+	return 0;
 
-    if (buf && len)
+    if (buf)
     {
-	if (*len > _bufLen)
-	    *len = _bufLen;
-	memcpy(buf, _buf, *len);
+	if (len > _bufLen)
+	    len = _bufLen;
+	memcpy(buf, _buf, len);
     }
     clearRxBuf();
 //    printBuffer("recv:", buf, *len);
-    return true;
+    return len;
 }
 
 bool Rfm22::available()
@@ -444,7 +444,7 @@ void Rfm22::enableInterrupts(){
 
 }
 
-uint8_t* Rfm22::irqHandler(){
+void Rfm22::irqHandler(){
 
     // Read the interrupt flags which clears the interrupt
     spi.readRegBytes(RH_RF22_REG_03_INTERRUPT_STATUS1, _lastInterruptFlags, 2);
@@ -486,7 +486,7 @@ uint8_t* Rfm22::irqHandler(){
     	{
     	    currentMode = Rfm22ModeIdle;
     	    clearRxBuf();
-    	    return _lastInterruptFlags; // Hmmm receiver buffer overflow.
+    	    return; // Hmmm receiver buffer overflow.
     	}
 
     	spi.readRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf + _bufLen, len - _bufLen);
@@ -513,5 +513,5 @@ uint8_t* Rfm22::irqHandler(){
     	resetRxFifo();
     	clearRxBuf();
     }
-    return _lastInterruptFlags;
+    return;
 }

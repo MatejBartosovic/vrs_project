@@ -1012,15 +1012,15 @@ public:
 	bool appendTxBuf(const uint8_t* data, uint8_t len);
 
 	/// Turns the receiver on if it not already on.
-    /// If there is a valid message available, copy it to buf and return true
-    /// else return false.
+    /// If there is a valid message available, copy it to buf and return number of coppyed bytes
+    /// else return 0.
 	/// If a message is copied, *len is set to the length (Caution, 0 length messages are permitted).
     /// You should be sure to call this function frequently enough to not miss any messages
 	/// It is recommended that you call it in your main loop.
     /// \param[in] buf Location to copy the received message
     /// \param[in,out] len Pointer to available space in buf. Set to the actual number of octets copied.
 	/// \return true if a valid message was copied to buf
-	bool recv(uint8_t* buf, uint8_t* len);
+	uint8_t recv(uint8_t* buf, uint8_t len);
 
     /// Starts the receiver and checks whether a received message is available.
     /// This can be called multiple times in a timeout loop
@@ -1037,7 +1037,7 @@ public:
 	//some shields has switched gpio pins connected to antena
 	void setGpioReversed(bool gpioReversed);
 
-	virtual uint8_t* irqHandler();
+	virtual void irqHandler();
 
 	virtual ~Rfm22();
 
