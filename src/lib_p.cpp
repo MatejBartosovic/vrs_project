@@ -71,7 +71,7 @@ void InitTIM(TIM_TypeDef* Timer, uint16_t Prescaler, uint32_t Period) {
 	return;
 }
 
-extern "C" void TIM2_IRQHandler(void) {
+/*extern "C" void TIM2_IRQHandler(void) {
 
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 
@@ -79,13 +79,13 @@ extern "C" void TIM2_IRQHandler(void) {
 
 		/* Code below is executed when TIM update interrupt is set */
 
-		ADC_print(ADC_Values); // vypis meranych hodnot ADC
+		/*ADC_print(ADC_Values); // vypis meranych hodnot ADC
 
 	}
 
 	return;
 
-}
+}*/
 
 void InitUART2viaUSB(void) {
 

@@ -13,7 +13,7 @@ void InitSYSTEMCLOCK(void);
 void EnableInterrupt(uint8_t IRQChannel, uint8_t Preemption, uint8_t Sub);
 
 void InitTIM(TIM_TypeDef* Timer, uint16_t Prescaler, uint32_t Period);
-extern "C" void TIM2_IRQHandler(void);
+//extern "C" void TIM2_IRQHandler(void);
 
 void InitUART2viaUSB(void);
 extern "C" void USART2_IRQHandler(void);

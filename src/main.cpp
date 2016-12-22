@@ -30,8 +30,9 @@ SOFTWARE.
 #include <Usart2.h>
 #include <Spi1.h>
 #include <basicSetup.h>
-#include <Rfm22.h>
+#include <Transmitter.h>
 
+#include <lib_p.h>
 
 /* Private typedef */
 /* Private define  */
@@ -50,7 +51,8 @@ SOFTWARE.
 */
 Usart2 usart;
 Spi1 spi;
-Rfm22 transmitter(spi);//*/
+Transmitter transmitter(spi);
+uint8_t data[]={'A','B'};//*/
 int main(void){
   /**
   *  IMPORTANT NOTE!
@@ -69,34 +71,22 @@ int main(void){
   *  system_stm32l1xx.c file
   */
 
-	initLED();
-	GPIO_ResetBits(GPIOA,GPIO_Pin_5);
-
 	//setup core frequency
 	sysClockSetup();
 
 	//setup nvic priority
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
-	//setup spi
-	spi.init();
-
 	//setup usart
 	usart.init();
 
-	//Rfm22 transmitter(spi);
+	//setup transmitter
 	transmitter.init();
-	transmitter.setModeRx();
-
-	uint8_t buf[RH_RF22_MAX_MESSAGE_LEN];
-	uint8_t len;
+	transmitter.send(data,2);
 	/* Infinite loop */
   while (1)
   {
-		if(transmitter.available()){
-			len = transmitter.recv(buf,RH_RF22_MAX_MESSAGE_LEN);
-			usart.write(buf,len);
-		}
+
   }
   return 0;
 }
@@ -132,7 +122,19 @@ extern "C" void EXTI15_10_IRQHandler(void) {
         EXTI_ClearITPendingBit(EXTI_Line10);
         transmitter.irqHandler();
     }
-}//*/
+}
+
+extern "C" void TIM2_IRQHandler(void) {
+
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+		transmitter.send(data,2);
+	}
+
+	return;
+
+}
 
 /*
  * Minimal __assert_func used by the assert() macro

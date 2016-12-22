@@ -11,16 +11,17 @@
 #include <rfm22.h>
 #include <SpiGeneric.h>
 #include <JoystickGeneric.h>
+#include <Timer.h>
 
-
-class Transmitter : private Rfm22 {
+class Transmitter : public Rfm22 {
 public:
-	Transmitter(SpiGeneric &spi, JoystickGeneric &joy);
+	Transmitter(SpiGeneric& spi );
 	void init();
 	virtual ~Transmitter();
 private:
+	void initTimer();
+	Timer timer;
 protected:
-	JoystickGeneric &joy;
 };
 
 #endif /* TRANSMITTER_H_ */
