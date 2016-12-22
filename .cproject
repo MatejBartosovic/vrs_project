@@ -39,7 +39,16 @@
 									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/GpioInterrupt}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/joystick}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/transmitter}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/RFM_22}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Temp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Usart}&quot;"/>
 								</option>
 								<inputType id="com.atollic.truestudio.as.input.750119999" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
@@ -49,14 +58,20 @@
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.directories.select.583982895" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/GpioInterrupt}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Usart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/joystick}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/transmitter}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/RFM_22}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Temp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Usart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/src}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.1615205130" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.46095218" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32L152RE" valueType="enumerated"/>
@@ -87,15 +102,20 @@
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 								</option>
 								<option id="com.atollic.truestudio.gpp.directories.select.1801348440" name="Include path" superClass="com.atollic.truestudio.gpp.directories.select" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Usart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:/Moje dokumenty/ing/1-rocnik/vrs/ws/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/joystick}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Temp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/RFM_22}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/GpioInterrupt}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Usart}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/Spi}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Device/ST/STM32L1xx/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/Libraries/STM32L1xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/mato_lib/transmitter}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vrs_project/RFM_22}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.965544622" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.1450357888" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32L152RE" valueType="enumerated"/>
@@ -126,10 +146,12 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Libraries"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="RFM_22"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="mato_lib/GpioInterrupt"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="mato_lib/Spi"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="mato_lib/Temp"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="mato_lib/Usart"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="mato_lib/GpioInterrupt"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="mato_lib/Spi"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="mato_lib/Temp"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="mato_lib/Usart"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="mato_lib/joystick"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="mato_lib/transmitter"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="rfm22/src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
