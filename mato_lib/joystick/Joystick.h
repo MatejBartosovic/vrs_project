@@ -10,10 +10,12 @@
 
 #include <JoystickGeneric.h>
 
-template <typename T>
-class Joystick : JoystickGeneric<T> {
+template <class T>
+class Joystick : public JoystickGeneric<T> {
 public:
-	Joystick();
+	Joystick() : JoystickGeneric<T>(){
+
+	}
 	void init(){
 		 ADC_InitTypeDef       ADC_InitStruct;
 		    ADC_CommonInitTypeDef ADC_CommonInitStruct;
@@ -30,7 +32,7 @@ public:
 		    // DMA1 Stream0 channel0 configuration
 		    DMA_InitStruct.DMA_M2M = DMA_M2M_Disable;
 		    DMA_InitStruct.DMA_PeripheralBaseAddr = (uint32_t)&ADC1->DR; // ADC1's data register
-		    DMA_InitStruct.DMA_MemoryBaseAddr = (uint32_t)&values;
+		    DMA_InitStruct.DMA_MemoryBaseAddr = (uint32_t)&this->values;
 		    DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralSRC;
 		    DMA_InitStruct.DMA_BufferSize = 2;
 		    DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -77,13 +79,26 @@ public:
 		    ADC_SoftwareStartConv(ADC1);
 
 		    return;
-
+	}
+	void start() {
+	    // Enable ADC1 DMA
+	    ADC_DMACmd(ADC1, ENABLE);
+	    // Enable ADC1
+	    ADC_Cmd(ADC1, ENABLE);
+	    // Start ADC1 Software Conversion
+	    ADC_SoftwareStartConv(ADC1);
 	}
 
-	joystickValuse readValue() {
-		return values;
+	void stop() {
+	    // Enable ADC1 DMA
+	    ADC_DMACmd(ADC1, DISABLE);
+	    // Enable ADC1
+	    ADC_Cmd(ADC1, DISABLE);
 	}
-	virtual ~Joystick();
+	~Joystick(){
+		stop();
+	}
+private:
 };
 
 #endif /* JOYSTICK_H_ */

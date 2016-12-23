@@ -11,22 +11,28 @@
 #include <stddef.h>
 #include "stm32l1xx.h"
 
-template <typename T = uint8_t>
+template <typename type>
+struct joystickValuse{
+	type x;
+	type y;
+};
+
+template <typename T>
 class JoystickGeneric {
 
-	typedef struct{
-		T x;
-		T y;
-	}joystickValuse;
 
 public:
-	JoystickGeneric();
+	JoystickGeneric(){};
 	void virtual init() = 0;
-	joystickValuse virtual readValue() = 0;
-	virtual ~JoystickGeneric();
+	T* readValue(){
+		return values;
+	};
+	virtual void start() = 0;
+	virtual void stop() = 0;
+	virtual ~JoystickGeneric(){};
 protected:
 	//structure which store current joystick data
-	joystickValuse values;
+	T values[2];
 };
 
 #endif /* JOYSTICKGENERIC_H_ */

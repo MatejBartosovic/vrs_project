@@ -30,9 +30,9 @@ SOFTWARE.
 #include <Usart2.h>
 #include <Spi1.h>
 #include <basicSetup.h>
+#include <JoyDeadzone.h>
 #include <Transmitter.h>
-
-#include <lib_p.h>
+#include <Joystick.h>
 
 /* Private typedef */
 /* Private define  */
@@ -52,7 +52,8 @@ SOFTWARE.
 Usart2 usart;
 Spi1 spi;
 Transmitter transmitter(spi);
-uint8_t data[]={'A','B'};//*/
+Joystick<uint8_t> joy;
+JoyDeadzone<uint8_t> deadzone(joy);
 int main(void){
   /**
   *  IMPORTANT NOTE!
@@ -81,8 +82,8 @@ int main(void){
 	usart.init();
 
 	//setup transmitter
+	joy.init();
 	transmitter.init();
-	transmitter.send(data,2);
 	/* Infinite loop */
   while (1)
   {
@@ -129,7 +130,7 @@ extern "C" void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		transmitter.send(data,2);
+		transmitter.send(deadzone.getValues(),2);
 	}
 
 	return;
