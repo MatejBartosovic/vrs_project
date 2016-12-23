@@ -36,6 +36,11 @@ public:
 		this->joyMid = joyMid;
 	}
 
+	void init(){
+		joy.init();
+		joy.start();
+	}
+
 	T *getValues(){
 		memcpy(readerValues,joy.readValue(),2);
 		if((readerValues[0] < deadzoneP) &&(readerValues[0] > deadzoneN))
@@ -45,7 +50,6 @@ public:
 		return readerValues;
 	}
 	virtual ~JoyDeadzone(){
-
 	}
 private:
 

@@ -27,12 +27,11 @@ SOFTWARE.
 #include "stm32l1xx.h"
 
 //my includes
-#include <Usart2.h>
 #include <Spi1.h>
 #include <basicSetup.h>
-#include <JoyDeadzone.h>
 #include <Transmitter.h>
 #include <Joystick.h>
+#include <JoyDeadzone.h>
 
 /* Private typedef */
 /* Private define  */
@@ -49,7 +48,6 @@ SOFTWARE.
 **
 **===========================================================================
 */
-Usart2 usart;
 Spi1 spi;
 Transmitter transmitter(spi);
 Joystick<uint8_t> joy;
@@ -78,12 +76,12 @@ int main(void){
 	//setup nvic priority
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
-	//setup usart
-	usart.init();
+	//setup joystick
+	deadzone.init();
 
 	//setup transmitter
-	joy.init();
 	transmitter.init();
+
 	/* Infinite loop */
   while (1)
   {
@@ -112,10 +110,6 @@ void assert_failed(uint8_t* file, uint32_t line)
   }
 }
 #endif
-
-extern "C" void USART2_IRQHandler (void){
-	usart.irqHandler();
-}
 
 extern "C" void EXTI15_10_IRQHandler(void) {
 	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
