@@ -50,7 +50,9 @@ SOFTWARE.
 */
 Usart2 usart;
 Spi1 spi;
-Receiver receiver(spi);
+Rfm22 rf(spi);
+uint8_t data[2];
+
 int main(void){
   /**
   *  IMPORTANT NOTE!
@@ -76,15 +78,20 @@ int main(void){
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
 	//setup receiver
-	receiver.init();
+	rf.init();
 
 	//setup usart
 	usart.init();
-
+	uint8_t buf[2];
+	data[0] = 'i';
+	data[1] = 't';
 	/* Infinite loop */
   while (1)
   {
-		asm("nop");
+		if(rf.available()){
+			rf.recv(buf,2);
+			usart.write(data,2);
+		}
   }
   return 0;
 }
@@ -115,10 +122,10 @@ extern "C" void USART2_IRQHandler (void){
 }
 
 extern "C" void EXTI15_10_IRQHandler(void) {
-	GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
     if (EXTI_GetITStatus(EXTI_Line10) != RESET) {
         EXTI_ClearITPendingBit(EXTI_Line10);
-        receiver.irqHandler();
+        rf.irqHandler();
+        usart.write(data,2);
     }
 }
 
@@ -127,7 +134,6 @@ extern "C" void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		usart.write(receiver.getValues(),2);
 	}
 
 	return;
