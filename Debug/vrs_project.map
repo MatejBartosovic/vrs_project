@@ -1455,6 +1455,33 @@ Discarded input sections
                 0x00000000       0x10 src\main.o
  .text.__assert
                 0x00000000       0x20 src\main.o
+ .text          0x00000000        0x0 src\pwm.o
+ .data          0x00000000        0x0 src\pwm.o
+ .bss           0x00000000        0x0 src\pwm.o
+ .bss.value     0x00000000        0x1 src\pwm.o
+ .text._Z15InitializeTimerv
+                0x00000000       0x40 src\pwm.o
+ .text._Z20InitializePWMChannelv
+                0x00000000       0x44 src\pwm.o
+ .text._Z21InitializePWMChannel2v
+                0x00000000       0x44 src\pwm.o
+ .text._Z14vystupinitGPIOv
+                0x00000000       0x38 src\pwm.o
+ .text._Z15vystupinit2GPIOv
+                0x00000000       0x3c src\pwm.o
+ .text._Z10usart_initv
+                0x00000000       0xb0 src\pwm.o
+ .debug_info    0x00000000      0x9fb src\pwm.o
+ .debug_abbrev  0x00000000      0x141 src\pwm.o
+ .debug_aranges
+                0x00000000       0x48 src\pwm.o
+ .debug_ranges  0x00000000       0x38 src\pwm.o
+ .debug_line    0x00000000      0x313 src\pwm.o
+ .debug_str     0x00000000      0xc02 src\pwm.o
+ .comment       0x00000000       0x7f src\pwm.o
+ .debug_frame   0x00000000       0xe8 src\pwm.o
+ .ARM.attributes
+                0x00000000       0x33 src\pwm.o
  .text          0x00000000       0x14 src\startup_stm32l1xx_hd.o
  .data          0x00000000        0x0 src\startup_stm32l1xx_hd.o
  .bss           0x00000000        0x0 src\startup_stm32l1xx_hd.o
@@ -1711,6 +1738,7 @@ LOAD mato_lib\Temp\basicSetup.o
 LOAD mato_lib\Usart\Usart2.o
 LOAD mato_lib\Usart\UsartGeneric.o
 LOAD src\main.o
+LOAD src\pwm.o
 LOAD src\startup_stm32l1xx_hd.o
 LOAD src\stm32l1xx_it.o
 LOAD src\system_stm32l1xx.o
@@ -2956,11 +2984,13 @@ FSMC_NORSRAMInit                                  Libraries\STM32L1xx_StdPeriph_
 FSMC_NORSRAMStructInit                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_fsmc.o
 GPIO_DeInit                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
 GPIO_Init                                         Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
                                                   mato_lib\Temp\basicSetup.o
                                                   mato_lib\Spi\Spi1.o
                                                   RFM_22\Rfm22.o
 GPIO_PinAFConfig                                  Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
                                                   mato_lib\Spi\Spi1.o
 GPIO_PinLockConfig                                Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
@@ -3027,6 +3057,9 @@ IWDG_ReloadCounter                                Libraries\STM32L1xx_StdPeriph_
 IWDG_SetPrescaler                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_iwdg.o
 IWDG_SetReload                                    Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_iwdg.o
 IWDG_WriteAccessCmd                               Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_iwdg.o
+InitializePWMChannel()                            src\pwm.o
+InitializePWMChannel2()                           src\pwm.o
+InitializeTimer()                                 src\pwm.o
 LCD_BlinkConfig                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_lcd.o
 LCD_ClearFlag                                     Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_lcd.o
 LCD_ClearITPendingBit                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_lcd.o
@@ -3051,6 +3084,7 @@ MemManage_Handler                                 src\stm32l1xx_it.o
 NMI_Handler                                       src\stm32l1xx_it.o
                                                   src\startup_stm32l1xx_hd.o
 NVIC_Init                                         Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
                                                   RFM_22\Rfm22.o
 NVIC_PriorityGroupConfig                          Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
@@ -3085,6 +3119,7 @@ PWR_WakeUpPinCmd                                  Libraries\STM32L1xx_StdPeriph_
 PendSV_Handler                                    src\stm32l1xx_it.o
                                                   src\startup_stm32l1xx_hd.o
 RCC_AHBPeriphClockCmd                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rcc.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
                                                   mato_lib\Temp\basicSetup.o
                                                   mato_lib\Spi\Spi1.o
@@ -3094,6 +3129,7 @@ RCC_AHBPeriphResetCmd                             Libraries\STM32L1xx_StdPeriph_
                                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
                                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes.o
 RCC_APB1PeriphClockCmd                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rcc.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
 RCC_APB1PeriphClockLPModeCmd                      Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rcc.o
 RCC_APB1PeriphResetCmd                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rcc.o
@@ -3209,8 +3245,8 @@ RTC_WriteBackupRegister                           Libraries\STM32L1xx_StdPeriph_
 RTC_WriteProtectionCmd                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_rtc.o
 Reset_Handler                                     src\startup_stm32l1xx_hd.o
 Rfm22::Rfm22(SpiGeneric&)                         RFM_22\Rfm22.o
-Rfm22::Rfm22(SpiGeneric&)                         RFM_22\Rfm22.o
                                                   src\main.o
+Rfm22::Rfm22(SpiGeneric&)                         RFM_22\Rfm22.o
 Rfm22::appendTxBuf(unsigned char const*, unsigned char) RFM_22\Rfm22.o
 Rfm22::available()                                RFM_22\Rfm22.o
                                                   src\main.o
@@ -3251,9 +3287,9 @@ Rfm22::startTransmit()                            RFM_22\Rfm22.o
 Rfm22::statusRead()                               RFM_22\Rfm22.o
 Rfm22::waitPacketSent()                           RFM_22\Rfm22.o
 Rfm22::~Rfm22()                                   RFM_22\Rfm22.o
-Rfm22::~Rfm22()                                   RFM_22\Rfm22.o
-Rfm22::~Rfm22()                                   RFM_22\Rfm22.o
                                                   src\main.o
+Rfm22::~Rfm22()                                   RFM_22\Rfm22.o
+Rfm22::~Rfm22()                                   RFM_22\Rfm22.o
 SDIO_CEATAITCmd                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_sdio.o
 SDIO_ClearFlag                                    Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_sdio.o
 SDIO_ClearITPendingBit                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_sdio.o
@@ -3327,8 +3363,8 @@ SYSCFG_RITIMInputCaptureConfig                    Libraries\STM32L1xx_StdPeriph_
 SYSCFG_RITIMSelect                                Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_syscfg.o
 SYSCFG_USBPuCmd                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_syscfg.o
 Spi1::Spi1()                                      mato_lib\Spi\Spi1.o
-                                                  src\main.o
 Spi1::Spi1()                                      mato_lib\Spi\Spi1.o
+                                                  src\main.o
 Spi1::init()                                      mato_lib\Spi\Spi1.o
                                                   src\main.o
 Spi1::~Spi1()                                     mato_lib\Spi\Spi1.o
@@ -3336,8 +3372,8 @@ Spi1::~Spi1()                                     mato_lib\Spi\Spi1.o
                                                   src\main.o
 Spi1::~Spi1()                                     mato_lib\Spi\Spi1.o
 SpiGeneric::SpiGeneric()                          mato_lib\Spi\SpiGeneric.o
-SpiGeneric::SpiGeneric()                          mato_lib\Spi\SpiGeneric.o
                                                   mato_lib\Spi\Spi1.o
+SpiGeneric::SpiGeneric()                          mato_lib\Spi\SpiGeneric.o
 SpiGeneric::readReg(unsigned char)                mato_lib\Spi\SpiGeneric.o
                                                   RFM_22\Rfm22.o
 SpiGeneric::readRegBytes(unsigned char, unsigned char*, unsigned char) mato_lib\Spi\SpiGeneric.o
@@ -3350,8 +3386,8 @@ SpiGeneric::writeReg(unsigned char, unsigned char) mato_lib\Spi\SpiGeneric.o
 SpiGeneric::writeRegBytes(unsigned char, unsigned char*, unsigned char) mato_lib\Spi\SpiGeneric.o
                                                   RFM_22\Rfm22.o
 SpiGeneric::~SpiGeneric()                         mato_lib\Spi\SpiGeneric.o
-SpiGeneric::~SpiGeneric()                         mato_lib\Spi\SpiGeneric.o
                                                   mato_lib\Spi\Spi1.o
+SpiGeneric::~SpiGeneric()                         mato_lib\Spi\SpiGeneric.o
 SpiGeneric::~SpiGeneric()                         mato_lib\Spi\SpiGeneric.o
 SysTick_CLKSourceConfig                           Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
 SysTick_Handler                                   src\stm32l1xx_it.o
@@ -3380,6 +3416,7 @@ TIM_ClearOC2Ref                                   Libraries\STM32L1xx_StdPeriph_
 TIM_ClearOC3Ref                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_ClearOC4Ref                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_Cmd                                           Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_CounterModeConfig                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_DMACmd                                        Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_DMAConfig                                     Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
@@ -3408,16 +3445,20 @@ TIM_ITRxExternalClockConfig                       Libraries\STM32L1xx_StdPeriph_
 TIM_InternalClockConfig                           Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC1FastConfig                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC1Init                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_OC1PolarityConfig                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC1PreloadConfig                              Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_OC2FastConfig                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC2Init                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC2PolarityConfig                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC2PreloadConfig                              Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC3FastConfig                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC3Init                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_OC3PolarityConfig                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC3PreloadConfig                              Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_OC4FastConfig                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC4Init                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_OC4PolarityConfig                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
@@ -3448,6 +3489,7 @@ TIM_SetIC3Prescaler                               Libraries\STM32L1xx_StdPeriph_
 TIM_SetIC4Prescaler                               Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_TIxExternalClockConfig                        Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_TimeBaseInit                                  Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
+                                                  src\pwm.o
 TIM_TimeBaseStructInit                            Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_UpdateDisableConfig                           Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
 TIM_UpdateRequestConfig                           Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
@@ -3463,6 +3505,7 @@ USART_ClearITPendingBit                           Libraries\STM32L1xx_StdPeriph_
 USART_ClockInit                                   Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_ClockStructInit                             Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_Cmd                                         Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
 USART_DMACmd                                      Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_DeInit                                      Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
@@ -3471,8 +3514,10 @@ USART_GetFlagStatus                               Libraries\STM32L1xx_StdPeriph_
 USART_GetITStatus                                 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_HalfDuplexCmd                               Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_ITConfig                                    Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
 USART_Init                                        Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
+                                                  src\pwm.o
                                                   mato_lib\Usart\Usart2.o
 USART_IrDACmd                                     Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
 USART_IrDAConfig                                  Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
@@ -3527,8 +3572,8 @@ UsartGeneric::write(unsigned char*, unsigned char) mato_lib\Usart\UsartGeneric.o
                                                   mato_lib\Usart\Usart2.o
 UsartGeneric::~UsartGeneric()                     mato_lib\Usart\UsartGeneric.o
 UsartGeneric::~UsartGeneric()                     mato_lib\Usart\UsartGeneric.o
-                                                  mato_lib\Usart\Usart2.o
 UsartGeneric::~UsartGeneric()                     mato_lib\Usart\UsartGeneric.o
+                                                  mato_lib\Usart\Usart2.o
 WWDG_ClearFlag                                    Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_wwdg.o
 WWDG_DeInit                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_wwdg.o
 WWDG_Enable                                       Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_wwdg.o
@@ -3769,8 +3814,12 @@ ts_formatlength                                   src\tiny_printf.o
 ts_formatstring                                   src\tiny_printf.o
 ts_itoa                                           src\tiny_printf.o
 usart                                             src\main.o
+usart_init()                                      src\pwm.o
+value                                             src\pwm.o
 vtable for Rfm22                                  RFM_22\Rfm22.o
 vtable for Spi1                                   mato_lib\Spi\Spi1.o
 vtable for SpiGeneric                             mato_lib\Spi\SpiGeneric.o
 vtable for Usart2                                 mato_lib\Usart\Usart2.o
 vtable for UsartGeneric                           mato_lib\Usart\UsartGeneric.o
+vystupinit2GPIO()                                 src\pwm.o
+vystupinitGPIO()                                  src\pwm.o

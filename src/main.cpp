@@ -27,8 +27,6 @@ SOFTWARE.
 */
 
 /* Includes */
-#include <stddef.h>
-#include "stm32l1xx.h"
 
 //my includes
 #include <Usart2.h>
@@ -36,14 +34,12 @@ SOFTWARE.
 #include <basicSetup.h>
 #include <Rfm22.h>
 
-
 /* Private typedef */
 /* Private define  */
 /* Private macro */
 /* Private variables */
 /* Private function prototypes */
 /* Private functions */
-
 
 /**
 **===========================================================================
