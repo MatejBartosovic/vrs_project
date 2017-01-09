@@ -59,7 +59,7 @@ Rfm22::Rfm22(SpiGeneric& spi) : spi(spi), currentMode(Rfm22ModeInitialising),_tx
 }
 
 void Rfm22::init(){
-
+	spi.init();
 	reset();
 	setupInterrupts();
 	enableInterrupts();
