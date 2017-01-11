@@ -78,7 +78,7 @@ int main(void){
 	//setup nvic priority
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
-	//init pwm
+	//init jurove pwm
 	vystupinitGPIO();
 	vystupinit2GPIO();
 	InitializeTimer();
@@ -87,22 +87,13 @@ int main(void){
 
 	//setup receiver
 	receiver.init();
-
-	//setup usart
-	usart.init();
-
-	uint8_t buf[2];
-
 	receiver.setModeRx();
+
+
 	/* Infinite loop */
   while (1)
   {
-
-		/*if(receiver.available()){
-			receiver.recv(buf,2);
-			usart.write(buf,2);
-		}*/
-	  //asm("nop");
+	  asm("nop");
   }
   return 0;
 }
@@ -145,7 +136,6 @@ extern "C" void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		usart.write(receiver.getValues(),2);
 		setPwmValues(receiver.getValues());
 	}
 
