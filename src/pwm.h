@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include "stm32l1xx.h"
 
-
+#define SCALE_CONST .39215686
 
 
 
@@ -24,6 +24,7 @@ void InitializePWMChannel2();
 void vystupinitGPIO();
 void vystupinit2GPIO();
 void usart_init();
+void setPwmValues(uint8_t* val);
 
 
 

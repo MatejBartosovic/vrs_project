@@ -30,9 +30,9 @@ void InitializePWMChannel()
     outputChannelInit.TIM_OutputState = TIM_OutputState_Enable;
     outputChannelInit.TIM_OCPolarity = TIM_OCPolarity_High;
 
-    TIM_OC1Init(TIM4, &outputChannelInit);
-    TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
+    TIM_OC4Init(TIM4, &outputChannelInit);
+    TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_TIM4);
 
 }
 
@@ -55,7 +55,7 @@ void vystupinitGPIO()
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
     GPIO_InitTypeDef gpioStructure;
-    gpioStructure.GPIO_Pin = GPIO_Pin_6 ;
+    gpioStructure.GPIO_Pin = GPIO_Pin_9 ;
     gpioStructure.GPIO_Mode = GPIO_Mode_AF;
     gpioStructure.GPIO_OType = GPIO_OType_PP;
     gpioStructure.GPIO_PuPd  = GPIO_PuPd_UP;
@@ -120,4 +120,9 @@ void usart_init()
 
 		USART_Cmd(USART2, ENABLE);
 
+}
+
+void setPwmValues(uint8_t* val){
+	TIM4->CCR3 = (uint16_t)(100 + SCALE_CONST * *(val));
+	TIM4->CCR4 = (uint16_t)(100 + SCALE_CONST * *(val+1));
 }

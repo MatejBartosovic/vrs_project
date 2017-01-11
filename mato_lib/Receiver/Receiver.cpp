@@ -90,7 +90,10 @@ uint8_t* Receiver::getValues(){
 }
 
 void Receiver::init(){
+	_buf[0] = 128;
+	_buf[1] = 128;
 	Rfm22::init();
+	Rfm22::init(); // TODO nejaky bug treba volat 2x aby spi fungovala spravne
 	timer.init();
 	timer.start();
 }

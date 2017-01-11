@@ -33,6 +33,7 @@ SOFTWARE.
 #include <Spi1.h>
 #include <basicSetup.h>
 #include <Receiver.h>
+#include <pwm.h>
 
 /* Private typedef */
 /* Private define  */
@@ -77,6 +78,13 @@ int main(void){
 	//setup nvic priority
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
+	//init pwm
+	vystupinitGPIO();
+	vystupinit2GPIO();
+	InitializeTimer();
+	InitializePWMChannel();
+	InitializePWMChannel2();
+
 	//setup receiver
 	receiver.init();
 
@@ -89,11 +97,12 @@ int main(void){
 	/* Infinite loop */
   while (1)
   {
+
 		/*if(receiver.available()){
 			receiver.recv(buf,2);
 			usart.write(buf,2);
 		}*/
-	  asm("nop");
+	  //asm("nop");
   }
   return 0;
 }
@@ -137,6 +146,7 @@ extern "C" void TIM2_IRQHandler(void) {
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 		usart.write(receiver.getValues(),2);
+		setPwmValues(receiver.getValues());
 	}
 
 	return;
