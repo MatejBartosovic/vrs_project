@@ -126,3 +126,8 @@ void setPwmValues(uint8_t* val){
 	TIM4->CCR3 = (uint16_t)(100 + SCALE_CONST * *(val));
 	TIM4->CCR4 = (uint16_t)(100 + SCALE_CONST * *(val+1));
 }
+
+void setPwmZeros(){
+	TIM4->CCR3 = 150;
+	TIM4->CCR4 = 150;
+}

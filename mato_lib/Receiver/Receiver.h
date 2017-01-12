@@ -17,9 +17,14 @@ public:
 	void irqHandler();
 	void init();
 	uint8_t* getValues();
+	uint8_t getNumberOfValidMsgs();
+	void resetNumberOfValidMsgs();
 	virtual ~Receiver();
 protected:
 	Timer timer;
+	//Timer safetyTimer;
+private:
+	uint8_t validMsgsReceived;
 
 };
 

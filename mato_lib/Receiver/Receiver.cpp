@@ -7,7 +7,8 @@
 
 #include <Receiver.h>
 
-Receiver::Receiver(SpiGeneric& spi) : Rfm22(spi), timer(TIM2, 16000, 100){
+//,safetyTimer(TIM3,16000,300,TIM_CounterMode_Up,0,9,0)
+Receiver::Receiver(SpiGeneric& spi) : Rfm22(spi), timer(TIM2, 16000, 100),validMsgsReceived(0){
 	// TODO Auto-generated constructor stub
 
 }
@@ -58,14 +59,14 @@ void Receiver::irqHandler(){
     	}
 
     	spi.readRegBytes(RH_RF22_REG_7F_FIFO_ACCESS, _buf, len);
+    	//TODO vylepsit citanie
     	_rxHeaderTo = spi.readReg(RH_RF22_REG_47_RECEIVED_HEADER3);
     	_rxHeaderFrom = spi.readReg(RH_RF22_REG_48_RECEIVED_HEADER2);
     	_rxHeaderId = spi.readReg(RH_RF22_REG_49_RECEIVED_HEADER1);
     	_rxHeaderFlags = spi.readReg(RH_RF22_REG_4A_RECEIVED_HEADER0);
     	_bufLen = len;
     	_rxBufValid = true;
-    	currentMode = Rfm22ModeIdle;
-    	_rxBufValid = true;
+    	validMsgsReceived++;
     	setModeRx();
     }
     if (_lastInterruptFlags[0] & RH_RF22_ICRCERROR){
@@ -95,7 +96,17 @@ void Receiver::init(){
 	Rfm22::init();
 	Rfm22::init(); // TODO nejaky bug treba volat 2x aby spi fungovala spravne
 	timer.init();
+	//safetyTimer.init();
 	timer.start();
+	//safetyTimer.start();
+}
+
+uint8_t Receiver::getNumberOfValidMsgs(){
+	return validMsgsReceived;
+}
+
+void Receiver::resetNumberOfValidMsgs(){
+	validMsgsReceived = 0;
 }
 
 Receiver::~Receiver() {

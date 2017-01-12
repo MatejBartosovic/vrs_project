@@ -143,6 +143,21 @@ extern "C" void TIM2_IRQHandler(void) {
 
 }
 
+extern "C" void TIM3_IRQHandler(void) {
+
+	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) {
+
+		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+		if (receiver.getNumberOfValidMsgs())
+			receiver.resetNumberOfValidMsgs();
+		else
+			setPwmZeros();
+	}
+
+	return;
+
+}
+
 
 /*
  * Minimal __assert_func used by the assert() macro

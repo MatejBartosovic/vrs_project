@@ -25,6 +25,7 @@ void vystupinitGPIO();
 void vystupinit2GPIO();
 void usart_init();
 void setPwmValues(uint8_t* val);
+void setPwmZeros();
 
 
 
