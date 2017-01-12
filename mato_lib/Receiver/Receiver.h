@@ -22,10 +22,10 @@ public:
 	virtual ~Receiver();
 protected:
 	Timer timer;
-	//Timer safetyTimer;
+	Timer safetyTimer;
 private:
 	uint8_t validMsgsReceived;
 
 };
 
-#endif /* RECEIVER_H_ */
+#endif /* RECEIVR_H_ */

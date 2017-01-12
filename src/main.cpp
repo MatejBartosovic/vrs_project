@@ -94,6 +94,7 @@ int main(void){
   while (1)
   {
 	  asm("nop");
+	  receiver.setModeRx();
   }
   return 0;
 }
@@ -150,8 +151,11 @@ extern "C" void TIM3_IRQHandler(void) {
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 		if (receiver.getNumberOfValidMsgs())
 			receiver.resetNumberOfValidMsgs();
-		else
+		else{
+			*(uint16_t*)receiver.getValues() = 0x8080;
 			setPwmZeros();
+		}
+
 	}
 
 	return;

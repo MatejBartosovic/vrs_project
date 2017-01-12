@@ -7,8 +7,7 @@
 
 #include <Receiver.h>
 
-//,safetyTimer(TIM3,16000,300,TIM_CounterMode_Up,0,9,0)
-Receiver::Receiver(SpiGeneric& spi) : Rfm22(spi), timer(TIM2, 16000, 100),validMsgsReceived(0){
+Receiver::Receiver(SpiGeneric& spi) : Rfm22(spi), timer(TIM2, 16000, 100),safetyTimer(TIM3,16000,300,TIM_CounterMode_Up,0,9,0),validMsgsReceived(0){
 	// TODO Auto-generated constructor stub
 
 }
@@ -67,6 +66,7 @@ void Receiver::irqHandler(){
     	_bufLen = len;
     	_rxBufValid = true;
     	validMsgsReceived++;
+    	currentMode = Rfm22ModeIdle;
     	setModeRx();
     }
     if (_lastInterruptFlags[0] & RH_RF22_ICRCERROR){
@@ -91,14 +91,14 @@ uint8_t* Receiver::getValues(){
 }
 
 void Receiver::init(){
-	_buf[0] = 128;
-	_buf[1] = 128;
+	_buf[0] = 100;
+	_buf[1] = 100;
 	Rfm22::init();
 	Rfm22::init(); // TODO nejaky bug treba volat 2x aby spi fungovala spravne
 	timer.init();
-	//safetyTimer.init();
+	safetyTimer.init();
 	timer.start();
-	//safetyTimer.start();
+	safetyTimer.start();
 }
 
 uint8_t Receiver::getNumberOfValidMsgs(){

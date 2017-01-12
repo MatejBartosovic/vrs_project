@@ -1750,7 +1750,7 @@ LOAD c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib
                 0x08000000                g_pfnVectors
                 0x0800013c                . = ALIGN (0x4)
 
-.text           0x08000140     0x3eec
+.text           0x08000140     0x3f4c
                 0x08000140                . = ALIGN (0x4)
  *(.text)
  .text          0x08000140       0x40 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
@@ -2018,423 +2018,423 @@ LOAD c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib
                 0x08002730      0x190 RFM_22\Rfm22.o
                 0x08002730                Rfm22::irqHandler()
  .text._ZN8ReceiverC2ER10SpiGeneric
-                0x080028c0       0x54 mato_lib\Receiver\Receiver.o
+                0x080028c0       0x7c mato_lib\Receiver\Receiver.o
                 0x080028c0                Receiver::Receiver(SpiGeneric&)
                 0x080028c0                Receiver::Receiver(SpiGeneric&)
  .text._ZN8Receiver10irqHandlerEv
-                0x08002914      0x1ac mato_lib\Receiver\Receiver.o
-                0x08002914                Receiver::irqHandler()
+                0x0800293c      0x1b0 mato_lib\Receiver\Receiver.o
+                0x0800293c                Receiver::irqHandler()
  .text._ZN8Receiver9getValuesEv
-                0x08002ac0       0x18 mato_lib\Receiver\Receiver.o
-                0x08002ac0                Receiver::getValues()
+                0x08002aec       0x18 mato_lib\Receiver\Receiver.o
+                0x08002aec                Receiver::getValues()
  .text._ZN8Receiver4initEv
-                0x08002ad8       0x40 mato_lib\Receiver\Receiver.o
-                0x08002ad8                Receiver::init()
+                0x08002b04       0x54 mato_lib\Receiver\Receiver.o
+                0x08002b04                Receiver::init()
  .text._ZN8Receiver20getNumberOfValidMsgsEv
-                0x08002b18       0x18 mato_lib\Receiver\Receiver.o
-                0x08002b18                Receiver::getNumberOfValidMsgs()
+                0x08002b58       0x18 mato_lib\Receiver\Receiver.o
+                0x08002b58                Receiver::getNumberOfValidMsgs()
  .text._ZN8Receiver22resetNumberOfValidMsgsEv
-                0x08002b30       0x1c mato_lib\Receiver\Receiver.o
-                0x08002b30                Receiver::resetNumberOfValidMsgs()
+                0x08002b70       0x1c mato_lib\Receiver\Receiver.o
+                0x08002b70                Receiver::resetNumberOfValidMsgs()
  .text._ZN8ReceiverD2Ev
-                0x08002b4c       0x3c mato_lib\Receiver\Receiver.o
-                0x08002b4c                Receiver::~Receiver()
-                0x08002b4c                Receiver::~Receiver()
+                0x08002b8c       0x44 mato_lib\Receiver\Receiver.o
+                0x08002b8c                Receiver::~Receiver()
+                0x08002b8c                Receiver::~Receiver()
  .text._ZN8ReceiverD0Ev
-                0x08002b88       0x20 mato_lib\Receiver\Receiver.o
-                0x08002b88                Receiver::~Receiver()
+                0x08002bd0       0x20 mato_lib\Receiver\Receiver.o
+                0x08002bd0                Receiver::~Receiver()
  .text._ZN4Spi1C2Ev
-                0x08002ba8       0x24 mato_lib\Spi\Spi1.o
-                0x08002ba8                Spi1::Spi1()
-                0x08002ba8                Spi1::Spi1()
+                0x08002bf0       0x24 mato_lib\Spi\Spi1.o
+                0x08002bf0                Spi1::Spi1()
+                0x08002bf0                Spi1::Spi1()
  .text._ZN4Spi14initEv
-                0x08002bcc       0xfc mato_lib\Spi\Spi1.o
-                0x08002bcc                Spi1::init()
+                0x08002c14       0xfc mato_lib\Spi\Spi1.o
+                0x08002c14                Spi1::init()
  .text._ZN4Spi1D2Ev
-                0x08002cc8       0x30 mato_lib\Spi\Spi1.o
-                0x08002cc8                Spi1::~Spi1()
-                0x08002cc8                Spi1::~Spi1()
+                0x08002d10       0x30 mato_lib\Spi\Spi1.o
+                0x08002d10                Spi1::~Spi1()
+                0x08002d10                Spi1::~Spi1()
  .text._ZN4Spi1D0Ev
-                0x08002cf8       0x20 mato_lib\Spi\Spi1.o
-                0x08002cf8                Spi1::~Spi1()
+                0x08002d40       0x20 mato_lib\Spi\Spi1.o
+                0x08002d40                Spi1::~Spi1()
  .text._ZN10SpiGenericC2Ev
-                0x08002d18       0x20 mato_lib\Spi\SpiGeneric.o
-                0x08002d18                SpiGeneric::SpiGeneric()
-                0x08002d18                SpiGeneric::SpiGeneric()
+                0x08002d60       0x20 mato_lib\Spi\SpiGeneric.o
+                0x08002d60                SpiGeneric::SpiGeneric()
+                0x08002d60                SpiGeneric::SpiGeneric()
  .text._ZN10SpiGeneric13writeRegBytesEhPhh
-                0x08002d38       0x7c mato_lib\Spi\SpiGeneric.o
-                0x08002d38                SpiGeneric::writeRegBytes(unsigned char, unsigned char*, unsigned char)
+                0x08002d80       0x7c mato_lib\Spi\SpiGeneric.o
+                0x08002d80                SpiGeneric::writeRegBytes(unsigned char, unsigned char*, unsigned char)
  .text._ZN10SpiGeneric8writeRegEhh
-                0x08002db4       0x60 mato_lib\Spi\SpiGeneric.o
-                0x08002db4                SpiGeneric::writeReg(unsigned char, unsigned char)
+                0x08002dfc       0x60 mato_lib\Spi\SpiGeneric.o
+                0x08002dfc                SpiGeneric::writeReg(unsigned char, unsigned char)
  .text._ZN10SpiGeneric7readRegEh
-                0x08002e14       0x68 mato_lib\Spi\SpiGeneric.o
-                0x08002e14                SpiGeneric::readReg(unsigned char)
+                0x08002e5c       0x68 mato_lib\Spi\SpiGeneric.o
+                0x08002e5c                SpiGeneric::readReg(unsigned char)
  .text._ZN10SpiGeneric12readRegBytesEhPhh
-                0x08002e7c       0x8c mato_lib\Spi\SpiGeneric.o
-                0x08002e7c                SpiGeneric::readRegBytes(unsigned char, unsigned char*, unsigned char)
+                0x08002ec4       0x8c mato_lib\Spi\SpiGeneric.o
+                0x08002ec4                SpiGeneric::readRegBytes(unsigned char, unsigned char*, unsigned char)
  .text._ZN10SpiGeneric7waitTxeEv
-                0x08002f08       0x30 mato_lib\Spi\SpiGeneric.o
-                0x08002f08                SpiGeneric::waitTxe()
+                0x08002f50       0x30 mato_lib\Spi\SpiGeneric.o
+                0x08002f50                SpiGeneric::waitTxe()
  .text._ZN10SpiGeneric8waitTxRxEv
-                0x08002f38       0x4c mato_lib\Spi\SpiGeneric.o
-                0x08002f38                SpiGeneric::waitTxRx()
+                0x08002f80       0x4c mato_lib\Spi\SpiGeneric.o
+                0x08002f80                SpiGeneric::waitTxRx()
  .text._ZN10SpiGenericD2Ev
-                0x08002f84       0x28 mato_lib\Spi\SpiGeneric.o
-                0x08002f84                SpiGeneric::~SpiGeneric()
-                0x08002f84                SpiGeneric::~SpiGeneric()
+                0x08002fcc       0x28 mato_lib\Spi\SpiGeneric.o
+                0x08002fcc                SpiGeneric::~SpiGeneric()
+                0x08002fcc                SpiGeneric::~SpiGeneric()
  .text._Z13sysClockSetupv
-                0x08002fac       0x30 mato_lib\Temp\basicSetup.o
-                0x08002fac                sysClockSetup()
+                0x08002ff4       0x30 mato_lib\Temp\basicSetup.o
+                0x08002ff4                sysClockSetup()
  .text._ZN5TimerC2EP11TIM_TypeDeftmtthh
-                0x08002fdc       0x5c mato_lib\Timer\Timer.o
-                0x08002fdc                Timer::Timer(TIM_TypeDef*, unsigned short, unsigned long, unsigned short, unsigned short, unsigned char, unsigned char)
-                0x08002fdc                Timer::Timer(TIM_TypeDef*, unsigned short, unsigned long, unsigned short, unsigned short, unsigned char, unsigned char)
+                0x08003024       0x5c mato_lib\Timer\Timer.o
+                0x08003024                Timer::Timer(TIM_TypeDef*, unsigned short, unsigned long, unsigned short, unsigned short, unsigned char, unsigned char)
+                0x08003024                Timer::Timer(TIM_TypeDef*, unsigned short, unsigned long, unsigned short, unsigned short, unsigned char, unsigned char)
  .text._ZN5Timer4initEv
-                0x08003038       0xfc mato_lib\Timer\Timer.o
-                0x08003038                Timer::init()
+                0x08003080       0xfc mato_lib\Timer\Timer.o
+                0x08003080                Timer::init()
  .text._ZN5Timer5startEv
-                0x08003134       0x1c mato_lib\Timer\Timer.o
-                0x08003134                Timer::start()
+                0x0800317c       0x1c mato_lib\Timer\Timer.o
+                0x0800317c                Timer::start()
  .text._ZN5Timer4stopEv
-                0x08003150       0x1c mato_lib\Timer\Timer.o
-                0x08003150                Timer::stop()
+                0x08003198       0x1c mato_lib\Timer\Timer.o
+                0x08003198                Timer::stop()
  .text._ZN5TimerD2Ev
-                0x0800316c       0x30 mato_lib\Timer\Timer.o
-                0x0800316c                Timer::~Timer()
-                0x0800316c                Timer::~Timer()
+                0x080031b4       0x30 mato_lib\Timer\Timer.o
+                0x080031b4                Timer::~Timer()
+                0x080031b4                Timer::~Timer()
  .text._ZN5TimerD0Ev
-                0x0800319c       0x20 mato_lib\Timer\Timer.o
-                0x0800319c                Timer::~Timer()
+                0x080031e4       0x20 mato_lib\Timer\Timer.o
+                0x080031e4                Timer::~Timer()
  .text._ZN6Usart2C2Ev
-                0x080031bc       0x24 mato_lib\Usart\Usart2.o
-                0x080031bc                Usart2::Usart2()
-                0x080031bc                Usart2::Usart2()
+                0x08003204       0x24 mato_lib\Usart\Usart2.o
+                0x08003204                Usart2::Usart2()
+                0x08003204                Usart2::Usart2()
  .text._ZN6Usart2D2Ev
-                0x080031e0       0x30 mato_lib\Usart\Usart2.o
-                0x080031e0                Usart2::~Usart2()
-                0x080031e0                Usart2::~Usart2()
+                0x08003228       0x30 mato_lib\Usart\Usart2.o
+                0x08003228                Usart2::~Usart2()
+                0x08003228                Usart2::~Usart2()
  .text._ZN6Usart2D0Ev
-                0x08003210       0x20 mato_lib\Usart\Usart2.o
-                0x08003210                Usart2::~Usart2()
+                0x08003258       0x20 mato_lib\Usart\Usart2.o
+                0x08003258                Usart2::~Usart2()
  .text._ZN6Usart24initEv
-                0x08003230       0xd4 mato_lib\Usart\Usart2.o
-                0x08003230                Usart2::init()
+                0x08003278       0xd4 mato_lib\Usart\Usart2.o
+                0x08003278                Usart2::init()
  .text._ZN12UsartGenericC2Ev
-                0x08003304       0x3c mato_lib\Usart\UsartGeneric.o
-                0x08003304                UsartGeneric::UsartGeneric()
-                0x08003304                UsartGeneric::UsartGeneric()
+                0x0800334c       0x3c mato_lib\Usart\UsartGeneric.o
+                0x0800334c                UsartGeneric::UsartGeneric()
+                0x0800334c                UsartGeneric::UsartGeneric()
  .text._ZN12UsartGeneric4readEPhh
-                0x08003340       0x80 mato_lib\Usart\UsartGeneric.o
-                0x08003340                UsartGeneric::read(unsigned char*, unsigned char)
+                0x08003388       0x80 mato_lib\Usart\UsartGeneric.o
+                0x08003388                UsartGeneric::read(unsigned char*, unsigned char)
  .text._ZN12UsartGeneric5writeEPhh
-                0x080033c0       0x58 mato_lib\Usart\UsartGeneric.o
-                0x080033c0                UsartGeneric::write(unsigned char*, unsigned char)
+                0x08003408       0x58 mato_lib\Usart\UsartGeneric.o
+                0x08003408                UsartGeneric::write(unsigned char*, unsigned char)
  .text._ZN12UsartGeneric14availableBytesEv
-                0x08003418       0x28 mato_lib\Usart\UsartGeneric.o
-                0x08003418                UsartGeneric::availableBytes()
+                0x08003460       0x28 mato_lib\Usart\UsartGeneric.o
+                0x08003460                UsartGeneric::availableBytes()
  .text._ZN12UsartGeneric5flushEv
-                0x08003440       0x1c mato_lib\Usart\UsartGeneric.o
-                0x08003440                UsartGeneric::flush()
+                0x08003488       0x1c mato_lib\Usart\UsartGeneric.o
+                0x08003488                UsartGeneric::flush()
  .text._ZN12UsartGeneric13writableBytesEv
-                0x0800345c       0x24 mato_lib\Usart\UsartGeneric.o
-                0x0800345c                UsartGeneric::writableBytes()
+                0x080034a4       0x24 mato_lib\Usart\UsartGeneric.o
+                0x080034a4                UsartGeneric::writableBytes()
  .text._ZN12UsartGeneric10irqHandlerEv
-                0x08003480       0xdc mato_lib\Usart\UsartGeneric.o
-                0x08003480                UsartGeneric::irqHandler()
+                0x080034c8       0xdc mato_lib\Usart\UsartGeneric.o
+                0x080034c8                UsartGeneric::irqHandler()
  .text._ZN12UsartGenericD2Ev
-                0x0800355c       0x28 mato_lib\Usart\UsartGeneric.o
-                0x0800355c                UsartGeneric::~UsartGeneric()
-                0x0800355c                UsartGeneric::~UsartGeneric()
+                0x080035a4       0x28 mato_lib\Usart\UsartGeneric.o
+                0x080035a4                UsartGeneric::~UsartGeneric()
+                0x080035a4                UsartGeneric::~UsartGeneric()
  .text._ZN12UsartGeneric9initWriteEh
-                0x08003584       0x60 mato_lib\Usart\UsartGeneric.o
-                0x08003584                UsartGeneric::initWrite(unsigned char)
- .text.main     0x080035e4       0x38 src\main.o
-                0x080035e4                main
+                0x080035cc       0x60 mato_lib\Usart\UsartGeneric.o
+                0x080035cc                UsartGeneric::initWrite(unsigned char)
+ .text.main     0x0800362c       0x40 src\main.o
+                0x0800362c                main
  .text.USART2_IRQHandler
-                0x0800361c       0x14 src\main.o
-                0x0800361c                USART2_IRQHandler
+                0x0800366c       0x14 src\main.o
+                0x0800366c                USART2_IRQHandler
  .text.EXTI15_10_IRQHandler
-                0x08003630       0x38 src\main.o
-                0x08003630                EXTI15_10_IRQHandler
+                0x08003680       0x38 src\main.o
+                0x08003680                EXTI15_10_IRQHandler
  .text.TIM2_IRQHandler
-                0x08003668       0x40 src\main.o
-                0x08003668                TIM2_IRQHandler
+                0x080036b8       0x40 src\main.o
+                0x080036b8                TIM2_IRQHandler
  .text.TIM3_IRQHandler
-                0x080036a8       0x54 src\main.o
-                0x080036a8                TIM3_IRQHandler
+                0x080036f8       0x64 src\main.o
+                0x080036f8                TIM3_IRQHandler
  .text._Z41__static_initialization_and_destruction_0ii
-                0x080036fc       0x70 src\main.o
+                0x0800375c       0x70 src\main.o
  .text._GLOBAL__sub_I_usart
-                0x0800376c       0x10 src\main.o
+                0x080037cc       0x10 src\main.o
  .text._Z15InitializeTimerv
-                0x0800377c       0x40 src\pwm.o
-                0x0800377c                InitializeTimer()
+                0x080037dc       0x40 src\pwm.o
+                0x080037dc                InitializeTimer()
  .text._Z20InitializePWMChannelv
-                0x080037bc       0x44 src\pwm.o
-                0x080037bc                InitializePWMChannel()
+                0x0800381c       0x44 src\pwm.o
+                0x0800381c                InitializePWMChannel()
  .text._Z21InitializePWMChannel2v
-                0x08003800       0x44 src\pwm.o
-                0x08003800                InitializePWMChannel2()
+                0x08003860       0x44 src\pwm.o
+                0x08003860                InitializePWMChannel2()
  .text._Z14vystupinitGPIOv
-                0x08003844       0x3c src\pwm.o
-                0x08003844                vystupinitGPIO()
+                0x080038a4       0x3c src\pwm.o
+                0x080038a4                vystupinitGPIO()
  .text._Z15vystupinit2GPIOv
-                0x08003880       0x3c src\pwm.o
-                0x08003880                vystupinit2GPIO()
- *fill*         0x080038bc        0x4 
+                0x080038e0       0x3c src\pwm.o
+                0x080038e0                vystupinit2GPIO()
+ *fill*         0x0800391c        0x4 
  .text._Z12setPwmValuesPh
-                0x080038c0       0x98 src\pwm.o
-                0x080038c0                setPwmValues(unsigned char*)
+                0x08003920       0x98 src\pwm.o
+                0x08003920                setPwmValues(unsigned char*)
  .text._Z11setPwmZerosv
-                0x08003958       0x1c src\pwm.o
-                0x08003958                setPwmZeros()
+                0x080039b8       0x1c src\pwm.o
+                0x080039b8                setPwmZeros()
  .text.Reset_Handler
-                0x08003974       0x50 src\startup_stm32l1xx_hd.o
-                0x08003974                Reset_Handler
+                0x080039d4       0x50 src\startup_stm32l1xx_hd.o
+                0x080039d4                Reset_Handler
  .text.Default_Handler
-                0x080039c4        0x2 src\startup_stm32l1xx_hd.o
-                0x080039c4                RTC_Alarm_IRQHandler
-                0x080039c4                EXTI2_IRQHandler
-                0x080039c4                COMP_ACQ_IRQHandler
-                0x080039c4                TIM10_IRQHandler
-                0x080039c4                USB_HP_IRQHandler
-                0x080039c4                TIM6_IRQHandler
-                0x080039c4                PVD_IRQHandler
-                0x080039c4                SDIO_IRQHandler
-                0x080039c4                EXTI3_IRQHandler
-                0x080039c4                EXTI0_IRQHandler
-                0x080039c4                I2C2_EV_IRQHandler
-                0x080039c4                SPI1_IRQHandler
-                0x080039c4                USB_FS_WKUP_IRQHandler
-                0x080039c4                DMA2_Channel2_IRQHandler
-                0x080039c4                DMA1_Channel4_IRQHandler
-                0x080039c4                ADC1_IRQHandler
-                0x080039c4                USART3_IRQHandler
-                0x080039c4                DMA1_Channel7_IRQHandler
-                0x080039c4                LCD_IRQHandler
-                0x080039c4                UART5_IRQHandler
-                0x080039c4                TIM4_IRQHandler
-                0x080039c4                DMA2_Channel1_IRQHandler
-                0x080039c4                I2C1_EV_IRQHandler
-                0x080039c4                DMA1_Channel6_IRQHandler
-                0x080039c4                UART4_IRQHandler
-                0x080039c4                DMA2_Channel4_IRQHandler
-                0x080039c4                RCC_IRQHandler
-                0x080039c4                DMA1_Channel1_IRQHandler
-                0x080039c4                Default_Handler
-                0x080039c4                TIM7_IRQHandler
-                0x080039c4                TIM5_IRQHandler
-                0x080039c4                EXTI9_5_IRQHandler
-                0x080039c4                TIM9_IRQHandler
-                0x080039c4                TAMPER_STAMP_IRQHandler
-                0x080039c4                RTC_WKUP_IRQHandler
-                0x080039c4                SPI2_IRQHandler
-                0x080039c4                DMA2_Channel5_IRQHandler
-                0x080039c4                DMA1_Channel5_IRQHandler
-                0x080039c4                USB_LP_IRQHandler
-                0x080039c4                EXTI4_IRQHandler
-                0x080039c4                DMA1_Channel3_IRQHandler
-                0x080039c4                COMP_IRQHandler
-                0x080039c4                WWDG_IRQHandler
-                0x080039c4                DAC_IRQHandler
-                0x080039c4                EXTI1_IRQHandler
-                0x080039c4                AES_IRQHandler
-                0x080039c4                TIM11_IRQHandler
-                0x080039c4                I2C2_ER_IRQHandler
-                0x080039c4                DMA1_Channel2_IRQHandler
-                0x080039c4                FLASH_IRQHandler
-                0x080039c4                USART1_IRQHandler
-                0x080039c4                SPI3_IRQHandler
-                0x080039c4                I2C1_ER_IRQHandler
-                0x080039c4                DMA2_Channel3_IRQHandler
- *fill*         0x080039c6        0x2 
+                0x08003a24        0x2 src\startup_stm32l1xx_hd.o
+                0x08003a24                RTC_Alarm_IRQHandler
+                0x08003a24                EXTI2_IRQHandler
+                0x08003a24                COMP_ACQ_IRQHandler
+                0x08003a24                TIM10_IRQHandler
+                0x08003a24                USB_HP_IRQHandler
+                0x08003a24                TIM6_IRQHandler
+                0x08003a24                PVD_IRQHandler
+                0x08003a24                SDIO_IRQHandler
+                0x08003a24                EXTI3_IRQHandler
+                0x08003a24                EXTI0_IRQHandler
+                0x08003a24                I2C2_EV_IRQHandler
+                0x08003a24                SPI1_IRQHandler
+                0x08003a24                USB_FS_WKUP_IRQHandler
+                0x08003a24                DMA2_Channel2_IRQHandler
+                0x08003a24                DMA1_Channel4_IRQHandler
+                0x08003a24                ADC1_IRQHandler
+                0x08003a24                USART3_IRQHandler
+                0x08003a24                DMA1_Channel7_IRQHandler
+                0x08003a24                LCD_IRQHandler
+                0x08003a24                UART5_IRQHandler
+                0x08003a24                TIM4_IRQHandler
+                0x08003a24                DMA2_Channel1_IRQHandler
+                0x08003a24                I2C1_EV_IRQHandler
+                0x08003a24                DMA1_Channel6_IRQHandler
+                0x08003a24                UART4_IRQHandler
+                0x08003a24                DMA2_Channel4_IRQHandler
+                0x08003a24                RCC_IRQHandler
+                0x08003a24                DMA1_Channel1_IRQHandler
+                0x08003a24                Default_Handler
+                0x08003a24                TIM7_IRQHandler
+                0x08003a24                TIM5_IRQHandler
+                0x08003a24                EXTI9_5_IRQHandler
+                0x08003a24                TIM9_IRQHandler
+                0x08003a24                TAMPER_STAMP_IRQHandler
+                0x08003a24                RTC_WKUP_IRQHandler
+                0x08003a24                SPI2_IRQHandler
+                0x08003a24                DMA2_Channel5_IRQHandler
+                0x08003a24                DMA1_Channel5_IRQHandler
+                0x08003a24                USB_LP_IRQHandler
+                0x08003a24                EXTI4_IRQHandler
+                0x08003a24                DMA1_Channel3_IRQHandler
+                0x08003a24                COMP_IRQHandler
+                0x08003a24                WWDG_IRQHandler
+                0x08003a24                DAC_IRQHandler
+                0x08003a24                EXTI1_IRQHandler
+                0x08003a24                AES_IRQHandler
+                0x08003a24                TIM11_IRQHandler
+                0x08003a24                I2C2_ER_IRQHandler
+                0x08003a24                DMA1_Channel2_IRQHandler
+                0x08003a24                FLASH_IRQHandler
+                0x08003a24                USART1_IRQHandler
+                0x08003a24                SPI3_IRQHandler
+                0x08003a24                I2C1_ER_IRQHandler
+                0x08003a24                DMA2_Channel3_IRQHandler
+ *fill*         0x08003a26        0x2 
  .text.NMI_Handler
-                0x080039c8        0xc src\stm32l1xx_it.o
-                0x080039c8                NMI_Handler
+                0x08003a28        0xc src\stm32l1xx_it.o
+                0x08003a28                NMI_Handler
  .text.HardFault_Handler
-                0x080039d4        0x8 src\stm32l1xx_it.o
-                0x080039d4                HardFault_Handler
+                0x08003a34        0x8 src\stm32l1xx_it.o
+                0x08003a34                HardFault_Handler
  .text.MemManage_Handler
-                0x080039dc        0x8 src\stm32l1xx_it.o
-                0x080039dc                MemManage_Handler
+                0x08003a3c        0x8 src\stm32l1xx_it.o
+                0x08003a3c                MemManage_Handler
  .text.BusFault_Handler
-                0x080039e4        0x8 src\stm32l1xx_it.o
-                0x080039e4                BusFault_Handler
+                0x08003a44        0x8 src\stm32l1xx_it.o
+                0x08003a44                BusFault_Handler
  .text.UsageFault_Handler
-                0x080039ec        0x8 src\stm32l1xx_it.o
-                0x080039ec                UsageFault_Handler
+                0x08003a4c        0x8 src\stm32l1xx_it.o
+                0x08003a4c                UsageFault_Handler
  .text.SVC_Handler
-                0x080039f4        0xc src\stm32l1xx_it.o
-                0x080039f4                SVC_Handler
+                0x08003a54        0xc src\stm32l1xx_it.o
+                0x08003a54                SVC_Handler
  .text.DebugMon_Handler
-                0x08003a00        0xc src\stm32l1xx_it.o
-                0x08003a00                DebugMon_Handler
+                0x08003a60        0xc src\stm32l1xx_it.o
+                0x08003a60                DebugMon_Handler
  .text.PendSV_Handler
-                0x08003a0c        0xc src\stm32l1xx_it.o
-                0x08003a0c                PendSV_Handler
+                0x08003a6c        0xc src\stm32l1xx_it.o
+                0x08003a6c                PendSV_Handler
  .text.SysTick_Handler
-                0x08003a18        0xc src\stm32l1xx_it.o
-                0x08003a18                SysTick_Handler
+                0x08003a78        0xc src\stm32l1xx_it.o
+                0x08003a78                SysTick_Handler
  .text.SystemInit
-                0x08003a24       0x68 src\system_stm32l1xx.o
-                0x08003a24                SystemInit
+                0x08003a84       0x68 src\system_stm32l1xx.o
+                0x08003a84                SystemInit
  .text.SystemCoreClockUpdate
-                0x08003a8c      0x158 src\system_stm32l1xx.o
-                0x08003a8c                SystemCoreClockUpdate
+                0x08003aec      0x158 src\system_stm32l1xx.o
+                0x08003aec                SystemCoreClockUpdate
  .text.SetSysClock
-                0x08003be4      0x120 src\system_stm32l1xx.o
+                0x08003c44      0x120 src\system_stm32l1xx.o
  .text.__cxa_pure_virtual
-                0x08003d04        0x6 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(pure.o)
-                0x08003d04                __cxa_pure_virtual
+                0x08003d64        0x6 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(pure.o)
+                0x08003d64                __cxa_pure_virtual
  .text._ZN10__cxxabiv111__terminateEPFvvE
-                0x08003d0a        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
-                0x08003d0a                __cxxabiv1::__terminate(void (*)())
- *fill*         0x08003d12        0x2 
+                0x08003d6a        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
+                0x08003d6a                __cxxabiv1::__terminate(void (*)())
+ *fill*         0x08003d72        0x2 
  .text._ZSt13get_terminatev
-                0x08003d14       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
-                0x08003d14                std::get_terminate()
+                0x08003d74       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
+                0x08003d74                std::get_terminate()
  .text._ZSt9terminatev
-                0x08003d24        0xa c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
-                0x08003d24                std::terminate()
+                0x08003d84        0xa c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(eh_terminate.o)
+                0x08003d84                std::terminate()
  .text.__aeabi_atexit
-                0x08003d2e        0xa c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(atexit_arm.o)
-                0x08003d2e                __aeabi_atexit
- .text._ZdlPv   0x08003d38        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(del_op.o)
-                0x08003d38                operator delete(void*)
- *fill*         0x08003d3c        0x4 
- .text.floor    0x08003d40      0x100 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libm.a(lib_a-s_floor.o)
-                0x08003d40                floor
- .text.abort    0x08003e40        0xe c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-abort.o)
-                0x08003e40                abort
- *fill*         0x08003e4e        0x2 
+                0x08003d8e        0xa c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(atexit_arm.o)
+                0x08003d8e                __aeabi_atexit
+ .text._ZdlPv   0x08003d98        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libstdc++_nano.a(del_op.o)
+                0x08003d98                operator delete(void*)
+ *fill*         0x08003d9c        0x4 
+ .text.floor    0x08003da0      0x100 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libm.a(lib_a-s_floor.o)
+                0x08003da0                floor
+ .text.abort    0x08003ea0        0xe c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-abort.o)
+                0x08003ea0                abort
+ *fill*         0x08003eae        0x2 
  .text.__cxa_atexit
-                0x08003e50       0x1c c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-cxa_atexit.o)
-                0x08003e50                __cxa_atexit
+                0x08003eb0       0x1c c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-cxa_atexit.o)
+                0x08003eb0                __cxa_atexit
  .text.__libc_init_array
-                0x08003e6c       0x4c c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-init.o)
-                0x08003e6c                __libc_init_array
- .text.free     0x08003eb8       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-malloc.o)
-                0x08003eb8                free
- .text._free_r  0x08003ec8       0x98 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-nano-freer.o)
-                0x08003ec8                _free_r
+                0x08003ecc       0x4c c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-init.o)
+                0x08003ecc                __libc_init_array
+ .text.free     0x08003f18       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-malloc.o)
+                0x08003f18                free
+ .text._free_r  0x08003f28       0x98 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-nano-freer.o)
+                0x08003f28                _free_r
  .text._raise_r
-                0x08003f60       0x54 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signal.o)
-                0x08003f60                _raise_r
- .text.raise    0x08003fb4       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signal.o)
-                0x08003fb4                raise
- .text._kill_r  0x08003fc4       0x24 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signalr.o)
-                0x08003fc4                _kill_r
+                0x08003fc0       0x54 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signal.o)
+                0x08003fc0                _raise_r
+ .text.raise    0x08004014       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signal.o)
+                0x08004014                raise
+ .text._kill_r  0x08004024       0x24 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signalr.o)
+                0x08004024                _kill_r
  .text._getpid_r
-                0x08003fe8        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signalr.o)
-                0x08003fe8                _getpid_r
+                0x08004048        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-signalr.o)
+                0x08004048                _getpid_r
  .text.__malloc_lock
-                0x08003fec        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-mlock.o)
-                0x08003fec                __malloc_lock
+                0x0800404c        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-mlock.o)
+                0x0800404c                __malloc_lock
  .text.__malloc_unlock
-                0x08003fee        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-mlock.o)
-                0x08003fee                __malloc_unlock
- .text._getpid  0x08003ff0       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(getpid.o)
-                0x08003ff0                _getpid
- .text._kill    0x08004000       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(kill.o)
-                0x08004000                _kill
- .text._exit    0x08004010        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(_exit.o)
-                0x08004010                _exit
+                0x0800404e        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-mlock.o)
+                0x0800404e                __malloc_unlock
+ .text._getpid  0x08004050       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(getpid.o)
+                0x08004050                _getpid
+ .text._kill    0x08004060       0x10 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(kill.o)
+                0x08004060                _kill
+ .text._exit    0x08004070        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libnosys.a(_exit.o)
+                0x08004070                _exit
  *(.glue_7)
- .glue_7        0x08004012        0x0 linker stubs
+ .glue_7        0x08004072        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08004012        0x0 linker stubs
+ .glue_7t       0x08004072        0x0 linker stubs
  *(.eh_frame)
- *fill*         0x08004012        0x2 
- .eh_frame      0x08004014        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+ *fill*         0x08004072        0x2 
+ .eh_frame      0x08004074        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
  *(.init)
- .init          0x08004014        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
-                0x08004014                _init
- .init          0x08004018        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
+ .init          0x08004074        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
+                0x08004074                _init
+ .init          0x08004078        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
  *(.fini)
- .fini          0x08004020        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
-                0x08004020                _fini
- .fini          0x08004024        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
-                0x0800402c                . = ALIGN (0x4)
-                0x0800402c                _etext = .
+ .fini          0x08004080        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crti.o
+                0x08004080                _fini
+ .fini          0x08004084        0x8 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
+                0x0800408c                . = ALIGN (0x4)
+                0x0800408c                _etext = .
 
-.vfp11_veneer   0x0800402c        0x0
- .vfp11_veneer  0x0800402c        0x0 linker stubs
+.vfp11_veneer   0x0800408c        0x0
+ .vfp11_veneer  0x0800408c        0x0 linker stubs
 
-.v4_bx          0x0800402c        0x0
- .v4_bx         0x0800402c        0x0 linker stubs
+.v4_bx          0x0800408c        0x0
+ .v4_bx         0x0800408c        0x0 linker stubs
 
-.iplt           0x0800402c        0x0
- .iplt          0x0800402c        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+.iplt           0x0800408c        0x0
+ .iplt          0x0800408c        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
 
-.rodata         0x0800402c      0x2bc
-                0x0800402c                . = ALIGN (0x4)
+.rodata         0x0800408c      0x2bc
+                0x0800408c                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x0800402c        0x6 RFM_22\Rfm22.o
+ .rodata        0x0800408c        0x6 RFM_22\Rfm22.o
  *(.rodata*)
- *fill*         0x08004032        0x2 
+ *fill*         0x08004092        0x2 
  .rodata._ZL18MODEM_CONFIG_TABLE
-                0x08004034      0x1e6 RFM_22\Rfm22.o
- *fill*         0x0800421a        0x2 
+                0x08004094      0x1e6 RFM_22\Rfm22.o
+ *fill*         0x0800427a        0x2 
  .rodata._ZTV5Rfm22
-                0x0800421c       0x1c RFM_22\Rfm22.o
-                0x0800421c                vtable for Rfm22
+                0x0800427c       0x1c RFM_22\Rfm22.o
+                0x0800427c                vtable for Rfm22
  .rodata._ZTV8Receiver
-                0x08004238       0x1c mato_lib\Receiver\Receiver.o
-                0x08004238                vtable for Receiver
+                0x08004298       0x1c mato_lib\Receiver\Receiver.o
+                0x08004298                vtable for Receiver
  .rodata._ZTV4Spi1
-                0x08004254       0x14 mato_lib\Spi\Spi1.o
-                0x08004254                vtable for Spi1
+                0x080042b4       0x14 mato_lib\Spi\Spi1.o
+                0x080042b4                vtable for Spi1
  .rodata._ZTV10SpiGeneric
-                0x08004268       0x14 mato_lib\Spi\SpiGeneric.o
-                0x08004268                vtable for SpiGeneric
+                0x080042c8       0x14 mato_lib\Spi\SpiGeneric.o
+                0x080042c8                vtable for SpiGeneric
  .rodata._ZTV5Timer
-                0x0800427c       0x10 mato_lib\Timer\Timer.o
-                0x0800427c                vtable for Timer
+                0x080042dc       0x10 mato_lib\Timer\Timer.o
+                0x080042dc                vtable for Timer
  .rodata._ZTV6Usart2
-                0x0800428c       0x2c mato_lib\Usart\Usart2.o
-                0x0800428c                vtable for Usart2
+                0x080042ec       0x2c mato_lib\Usart\Usart2.o
+                0x080042ec                vtable for Usart2
  .rodata._ZTV12UsartGeneric
-                0x080042b8       0x2c mato_lib\Usart\UsartGeneric.o
-                0x080042b8                vtable for UsartGeneric
+                0x08004318       0x2c mato_lib\Usart\UsartGeneric.o
+                0x08004318                vtable for UsartGeneric
  .rodata.str1.1
-                0x080042e4        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-impure.o)
-                0x080042e8                . = ALIGN (0x4)
- *fill*         0x080042e6        0x2 
+                0x08004344        0x2 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-impure.o)
+                0x08004348                . = ALIGN (0x4)
+ *fill*         0x08004346        0x2 
 
-.rel.dyn        0x080042e8        0x0
- .rel.iplt      0x080042e8        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+.rel.dyn        0x08004348        0x0
+ .rel.iplt      0x08004348        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x080042e8        0x0
-                0x080042e8                __exidx_start = .
+.ARM            0x08004348        0x0
+                0x08004348                __exidx_start = .
  *(.ARM.exidx*)
-                0x080042e8                __exidx_end = .
+                0x08004348                __exidx_end = .
 
-.preinit_array  0x080042e8        0x0
-                0x080042e8                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x08004348        0x0
+                0x08004348                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x080042e8                PROVIDE (__preinit_array_end, .)
+                0x08004348                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x080042e8        0x8
-                0x080042e8                PROVIDE (__init_array_start, .)
+.init_array     0x08004348        0x8
+                0x08004348                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x080042e8        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
- .init_array    0x080042ec        0x4 src\main.o
-                0x080042f0                PROVIDE (__init_array_end, .)
+ .init_array    0x08004348        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+ .init_array    0x0800434c        0x4 src\main.o
+                0x08004350                PROVIDE (__init_array_end, .)
 
-.fini_array     0x080042f0        0x4
+.fini_array     0x08004350        0x4
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x080042f0        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
+ .fini_array    0x08004350        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end, .)
-                0x080042f4                _sidata = LOADADDR (.data)
+                0x08004354                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0xa8 load address 0x080042f4
+.data           0x20000000       0xa8 load address 0x08004354
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -2467,11 +2467,11 @@ LOAD c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib
                 0x200000a8                . = ALIGN (0x4)
                 0x200000a8                _edata = .
 
-.igot.plt       0x200000a8        0x0 load address 0x0800439c
+.igot.plt       0x200000a8        0x0 load address 0x080043fc
  .igot.plt      0x200000a8        0x0 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtbegin.o
                 0x200000a8                . = ALIGN (0x4)
 
-.bss            0x200000a8      0x2a8 load address 0x0800439c
+.bss            0x200000a8      0x2c0 load address 0x080043fc
                 0x200000a8                _sbss = .
                 0x200000a8                __bss_start__ = _sbss
  *(.bss)
@@ -2481,27 +2481,27 @@ LOAD c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib
                 0x200000c4                usart
  .bss.spi       0x200002d0       0x10 src\main.o
                 0x200002d0                spi
- .bss.receiver  0x200002e0       0x68 src\main.o
+ .bss.receiver  0x200002e0       0x80 src\main.o
                 0x200002e0                receiver
  .bss.__malloc_free_list
-                0x20000348        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-nano-mallocr.o)
-                0x20000348                __malloc_free_list
+                0x20000360        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-nano-mallocr.o)
+                0x20000360                __malloc_free_list
  *(COMMON)
- COMMON         0x2000034c        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-reent.o)
-                0x2000034c                errno
-                0x20000350                . = ALIGN (0x4)
-                0x20000350                _ebss = .
-                0x20000350                __bss_end__ = _ebss
+ COMMON         0x20000364        0x4 c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/../../../../arm-atollic-eabi/lib/armv7-m\libc_nano.a(lib_a-reent.o)
+                0x20000364                errno
+                0x20000368                . = ALIGN (0x4)
+                0x20000368                _ebss = .
+                0x20000368                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x20000350      0x400 load address 0x0800439c
-                0x20000350                . = ALIGN (0x4)
-                0x20000350                PROVIDE (end, .)
+                0x20000368      0x400 load address 0x080043fc
+                0x20000368                . = ALIGN (0x4)
+                0x20000368                PROVIDE (end, .)
                 [!provide]                PROVIDE (_end, .)
-                0x20000350                . = (. + _Min_Heap_Size)
-                0x20000750                . = (. + _Min_Stack_Size)
- *fill*         0x20000350      0x400 
-                0x20000750                . = ALIGN (0x4)
+                0x20000368                . = (. + _Min_Heap_Size)
+                0x20000768                . = (. + _Min_Stack_Size)
+ *fill*         0x20000368      0x400 
+                0x20000768                . = ALIGN (0x4)
 
 .memory_b1_text
  *(.mb1text)
@@ -2625,7 +2625,7 @@ LOAD c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib
                 0x000008f0       0x1d c:/program files (x86)/atollic/truestudio for arm 6.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/5.3.1/armv7-m/crtn.o
 OUTPUT(vrs_project.elf elf32-littlearm)
 
-.debug_info     0x00000000     0xa26d
+.debug_info     0x00000000     0xa27a
  .debug_info    0x00000000      0x55a Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
  .debug_info    0x0000055a      0x35b Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_exti.o
  .debug_info    0x000008b5      0x65f Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
@@ -2635,18 +2635,18 @@ OUTPUT(vrs_project.elf elf32-littlearm)
  .debug_info    0x0000266a     0x196f Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
  .debug_info    0x00003fd9      0x9ce Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
  .debug_info    0x000049a7     0x15bb RFM_22\Rfm22.o
- .debug_info    0x00005f62      0x5e3 mato_lib\Receiver\Receiver.o
- .debug_info    0x00006545      0x63e mato_lib\Spi\Spi1.o
- .debug_info    0x00006b83      0x773 mato_lib\Spi\SpiGeneric.o
- .debug_info    0x000072f6      0x37b mato_lib\Temp\basicSetup.o
- .debug_info    0x00007671      0x80a mato_lib\Timer\Timer.o
- .debug_info    0x00007e7b      0x7d4 mato_lib\Usart\Usart2.o
- .debug_info    0x0000864f      0x643 mato_lib\Usart\UsartGeneric.o
- .debug_info    0x00008c92      0x488 src\main.o
- .debug_info    0x0000911a      0xa3e src\pwm.o
- .debug_info    0x00009b58       0x7a src\startup_stm32l1xx_hd.o
- .debug_info    0x00009bd2      0x133 src\stm32l1xx_it.o
- .debug_info    0x00009d05      0x568 src\system_stm32l1xx.o
+ .debug_info    0x00005f62      0x5f0 mato_lib\Receiver\Receiver.o
+ .debug_info    0x00006552      0x63e mato_lib\Spi\Spi1.o
+ .debug_info    0x00006b90      0x773 mato_lib\Spi\SpiGeneric.o
+ .debug_info    0x00007303      0x37b mato_lib\Temp\basicSetup.o
+ .debug_info    0x0000767e      0x80a mato_lib\Timer\Timer.o
+ .debug_info    0x00007e88      0x7d4 mato_lib\Usart\Usart2.o
+ .debug_info    0x0000865c      0x643 mato_lib\Usart\UsartGeneric.o
+ .debug_info    0x00008c9f      0x488 src\main.o
+ .debug_info    0x00009127      0xa3e src\pwm.o
+ .debug_info    0x00009b65       0x7a src\startup_stm32l1xx_hd.o
+ .debug_info    0x00009bdf      0x133 src\stm32l1xx_it.o
+ .debug_info    0x00009d12      0x568 src\system_stm32l1xx.o
 
 .debug_abbrev   0x00000000     0x23cf
  .debug_abbrev  0x00000000      0x149 Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
@@ -2738,7 +2738,7 @@ OUTPUT(vrs_project.elf elf32-littlearm)
  .debug_ranges  0x00000a70       0x50 src\stm32l1xx_it.o
  .debug_ranges  0x00000ac0       0x20 src\system_stm32l1xx.o
 
-.debug_line     0x00000000     0x4df0
+.debug_line     0x00000000     0x4dfd
  .debug_line    0x00000000      0x2cf Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
  .debug_line    0x000002cf      0x332 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_exti.o
  .debug_line    0x00000601      0x3ea Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.o
@@ -2748,20 +2748,20 @@ OUTPUT(vrs_project.elf elf32-littlearm)
  .debug_line    0x000017da      0xa16 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_tim.o
  .debug_line    0x000021f0      0x53c Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.o
  .debug_line    0x0000272c      0x61c RFM_22\Rfm22.o
- .debug_line    0x00002d48      0x341 mato_lib\Receiver\Receiver.o
- .debug_line    0x00003089      0x31c mato_lib\Spi\Spi1.o
- .debug_line    0x000033a5      0x350 mato_lib\Spi\SpiGeneric.o
- .debug_line    0x000036f5      0x27f mato_lib\Temp\basicSetup.o
- .debug_line    0x00003974      0x33b mato_lib\Timer\Timer.o
- .debug_line    0x00003caf      0x326 mato_lib\Usart\Usart2.o
- .debug_line    0x00003fd5      0x32e mato_lib\Usart\UsartGeneric.o
- .debug_line    0x00004303      0x2a8 src\main.o
- .debug_line    0x000045ab      0x33b src\pwm.o
- .debug_line    0x000048e6       0x7c src\startup_stm32l1xx_hd.o
- .debug_line    0x00004962      0x216 src\stm32l1xx_it.o
- .debug_line    0x00004b78      0x278 src\system_stm32l1xx.o
+ .debug_line    0x00002d48      0x346 mato_lib\Receiver\Receiver.o
+ .debug_line    0x0000308e      0x31c mato_lib\Spi\Spi1.o
+ .debug_line    0x000033aa      0x350 mato_lib\Spi\SpiGeneric.o
+ .debug_line    0x000036fa      0x27f mato_lib\Temp\basicSetup.o
+ .debug_line    0x00003979      0x33b mato_lib\Timer\Timer.o
+ .debug_line    0x00003cb4      0x326 mato_lib\Usart\Usart2.o
+ .debug_line    0x00003fda      0x32e mato_lib\Usart\UsartGeneric.o
+ .debug_line    0x00004308      0x2b0 src\main.o
+ .debug_line    0x000045b8      0x33b src\pwm.o
+ .debug_line    0x000048f3       0x7c src\startup_stm32l1xx_hd.o
+ .debug_line    0x0000496f      0x216 src\stm32l1xx_it.o
+ .debug_line    0x00004b85      0x278 src\system_stm32l1xx.o
 
-.debug_str      0x00000000     0x3c44
+.debug_str      0x00000000     0x3c50
  .debug_str     0x00000000      0x3a6 Libraries\STM32L1xx_StdPeriph_Driver\src\misc.o
                                 0x414 (size before relaxing)
  .debug_str     0x000003a6      0x1a1 Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_exti.o
@@ -2780,27 +2780,27 @@ OUTPUT(vrs_project.elf elf32-littlearm)
                                 0x6d5 (size before relaxing)
  .debug_str     0x000020c5      0xe61 RFM_22\Rfm22.o
                                0x1370 (size before relaxing)
- .debug_str     0x00002f26      0x19d mato_lib\Receiver\Receiver.o
-                                0x4e8 (size before relaxing)
- .debug_str     0x000030c3       0xc5 mato_lib\Spi\Spi1.o
+ .debug_str     0x00002f26      0x1a9 mato_lib\Receiver\Receiver.o
+                                0x4f4 (size before relaxing)
+ .debug_str     0x000030cf       0xc5 mato_lib\Spi\Spi1.o
                                 0x605 (size before relaxing)
- .debug_str     0x00003188      0x211 mato_lib\Spi\SpiGeneric.o
+ .debug_str     0x00003194      0x211 mato_lib\Spi\SpiGeneric.o
                                 0x509 (size before relaxing)
- .debug_str     0x00003399       0x6d mato_lib\Temp\basicSetup.o
+ .debug_str     0x000033a5       0x6d mato_lib\Temp\basicSetup.o
                                 0x4b7 (size before relaxing)
- .debug_str     0x00003406      0x126 mato_lib\Timer\Timer.o
+ .debug_str     0x00003412      0x126 mato_lib\Timer\Timer.o
                                 0x8ba (size before relaxing)
- .debug_str     0x0000352c       0xdf mato_lib\Usart\Usart2.o
+ .debug_str     0x00003538       0xdf mato_lib\Usart\Usart2.o
                                 0x9e1 (size before relaxing)
- .debug_str     0x0000360b      0x268 mato_lib\Usart\UsartGeneric.o
+ .debug_str     0x00003617      0x268 mato_lib\Usart\UsartGeneric.o
                                 0x50d (size before relaxing)
- .debug_str     0x00003873       0xf7 src\main.o
+ .debug_str     0x0000387f       0xf7 src\main.o
                                 0x414 (size before relaxing)
- .debug_str     0x0000396a      0x186 src\pwm.o
+ .debug_str     0x00003976      0x186 src\pwm.o
                                 0xc3f (size before relaxing)
- .debug_str     0x00003af0       0xa6 src\stm32l1xx_it.o
+ .debug_str     0x00003afc       0xa6 src\stm32l1xx_it.o
                                 0x221 (size before relaxing)
- .debug_str     0x00003b96       0xae src\system_stm32l1xx.o
+ .debug_str     0x00003ba2       0xae src\system_stm32l1xx.o
                                 0x380 (size before relaxing)
 
 .comment        0x00000000       0x7e
