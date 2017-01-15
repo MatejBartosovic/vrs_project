@@ -16,6 +16,7 @@ public:
 	Joystick() : JoystickGeneric<T>(){
 
 	}
+	//init dma and adc
 	void init(){
 		 ADC_InitTypeDef       ADC_InitStruct;
 		    ADC_CommonInitTypeDef ADC_CommonInitStruct;
@@ -80,6 +81,8 @@ public:
 
 		    return;
 	}
+
+	//start dma and adc
 	void start() {
 	    // Enable ADC1 DMA
 	    ADC_DMACmd(ADC1, ENABLE);
@@ -89,12 +92,15 @@ public:
 	    ADC_SoftwareStartConv(ADC1);
 	}
 
+	//stop dma and adc
 	void stop() {
 	    // Enable ADC1 DMA
 	    ADC_DMACmd(ADC1, DISABLE);
 	    // Enable ADC1
 	    ADC_Cmd(ADC1, DISABLE);
 	}
+
+	//destructor
 	~Joystick(){
 		stop();
 	}

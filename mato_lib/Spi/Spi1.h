@@ -13,8 +13,13 @@
 
 class Spi1 : public SpiGeneric {
 public:
+	//constructor
 	Spi1();
+
+	//init spi1
 	void init();
+
+	//destructor
 	virtual ~Spi1();
 };
 

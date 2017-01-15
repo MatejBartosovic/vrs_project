@@ -8,30 +8,43 @@
 #ifndef JOYSTICKGENERIC_H_
 #define JOYSTICKGENERIC_H_
 
+/*
+ * Template class to reading joystick data
+ * */
+
 #include <stddef.h>
 #include "stm32l1xx.h"
 
-template <typename type>
-struct joystickValuse{
-	type x;
-	type y;
-};
+/*
+ * Template class to joystick
+ * */
 
 template <typename T>
 class JoystickGeneric {
 
 
 public:
+	//constructor
 	JoystickGeneric(){};
+
+	//init - must by implemented by by inherited class
 	void virtual init() = 0;
+
+	//return current values
 	T* readValue(){
 		return values;
 	};
+
+	//start reading values from AD converter
 	virtual void start() = 0;
+
+	//stop  reading values from AD converter
 	virtual void stop() = 0;
+
+	//destructor
 	virtual ~JoystickGeneric(){};
 protected:
-	//structure which store current joystick data
+	//array which store current joystick data
 	T values[2];
 };
 

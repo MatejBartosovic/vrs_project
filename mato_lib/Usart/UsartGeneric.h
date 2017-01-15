@@ -8,19 +8,43 @@
 #ifndef USARTGENERIC_H_
 #define USARTGENERIC_H_
 
+/*
+ * Template class to usart interface.
+ * This class offer basic read and write function based on interrupts which can be reimplemented.
+ * Function init need to be implemented by inherited class.
+ * MethodirqHandler have to be called on interrupt.
+ * */
+
 #include <stddef.h>
 #include "stm32l1xx.h"
 
 class UsartGeneric {
 public:
+	//constructor
 	UsartGeneric();
+
+	//this method must be implemented in inherited class
 	virtual void init() = 0;
+
+	//read len bytes to data, number of red bytes is returned
 	virtual uint8_t read(uint8_t* data,uint8_t len);
+
+	//write len bytes to usart
 	virtual void write(uint8_t* data,uint8_t len);
+
+	//return available bytes in receive buffer
 	virtual uint8_t availableBytes();
+
+	//flush receive buffer
 	virtual void flush();
+
+	//return numer of bytes waiting to be send
 	virtual uint8_t writableBytes();
+
+	//irq handler needed to be called when interupt occur
 	virtual void irqHandler (void);
+
+	//destructor
 	virtual ~UsartGeneric();
 private:
 	void initWrite(uint8_t new_bytes);
